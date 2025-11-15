@@ -21,32 +21,13 @@ function getSupplierId() {
 
 export const options = {
   stages: [
-    // Morning ramp-up (simulating business hours)
-    // { duration: '3m', target: 10 },   // Early morning
-    // { duration: '5m', target: 30 },   // Peak morning
-    // { duration: '10m', target: 50 },  // Mid-morning peak
-    // Lunch dip
-    // { duration: '2m', target: 30 },   // Lunch reduction
-    // { duration: '3m', target: 30 },   // Sustain lunch level
-    // Afternoon peak
-    // { duration: '5m', target: 60 },   // Afternoon ramp
-    // { duration: '10m', target: 60 },  // Afternoon sustain
-    // Evening wind-down
-    // { duration: '3m', target: 30 },   // Evening reduction
-    // { duration: '2m', target: 10 },   // Late evening
-    // { duration: '2m', target: 0 },    // Night shutdown
-    // Progressive load increase
-    // { duration: '5m', target: 50 },   // Start conservative
-    // { duration: '5m', target: 100 },  // Double the load
-    // { duration: '5m', target: 200 },  // Keep doubling
-    // { duration: '5m', target: 400 },  // Push further
-    // { duration: '5m', target: 800 },  // Find breaking point
-    // { duration: '5m', target: 1600 }, // Push to failure
-    // Gradual recovery
-    { duration: '2m', target: 400 },  // Step back
-    { duration: '2m', target: 100 },  // Further back
-    { duration: '2m', target: 0 },    // Clean shutdown
- ],
+    { duration: "1m", target: 5 },    // Warm-up period
+    { duration: "2m", target: 15 },   // Normal load period
+    { duration: "3m", target: 25 },   // Mini-peak (review/testing together)
+    { duration: "2m", target: 15 },   // Back to normal load
+    { duration: "1m", target: 0 }   // Cool-down period
+  ]
+  // Basic test configuration
   // vus: 1,
   // duration: "2m",
 };
