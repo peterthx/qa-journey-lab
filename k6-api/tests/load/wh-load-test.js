@@ -20,7 +20,7 @@ function getSupplierId() {
 }
 
 export const options = {
-  //stages: [
+  stages: [
     // Morning ramp-up (simulating business hours)
     // { duration: '3m', target: 10 },   // Early morning
     // { duration: '5m', target: 30 },   // Peak morning
@@ -46,7 +46,7 @@ export const options = {
     { duration: '2m', target: 400 },  // Step back
     { duration: '2m', target: 100 },  // Further back
     { duration: '2m', target: 0 },    // Clean shutdown
-//  ],
+ ],
   // vus: 1,
   // duration: "2m",
 };
