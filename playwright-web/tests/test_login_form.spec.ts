@@ -30,5 +30,3 @@ test('Login with locked out user', async ({ page }) => {
     const errorMessage = page.locator('[data-test="error"]');
     await expect(errorMessage).toContainText('Sorry, this user has been locked out.');
 });
-
-
