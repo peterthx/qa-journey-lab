@@ -1,8 +1,9 @@
 import http from "k6/http";
 import { check, sleep } from "k6";
+import { BASE_URL, SERVICE } from "../../.env/settings.js";
 
 export default function () {
-  const res = http.get("http://srv946485.hstgr.cloud:3000/api/inventory");
+  const res = http.get(`${BASE_URL.ENDPOINT}${SERVICE.GET_ALL_PRODUCTS}`);
   sleep(1);
 
   check(res, {

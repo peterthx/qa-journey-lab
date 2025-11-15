@@ -1,0 +1,139 @@
+import http from "k6/http";
+import { check, group, sleep } from "k6";
+import exec from "k6/execution";
+import { BASE_URL, SERVICE } from "../../.env/settings.js";
+import {
+  randomSupplierName,
+  randomContactName,
+  randomEmail,
+  randomPhoneNumber,
+  randomAddress,
+} from "../../utils/helpers.js";
+
+// Module-scoped storage for the supplier id. This persists per VU across iterations.
+let supplierId = null;
+function setSupplierId(id) {
+  supplierId = id;
+}
+function getSupplierId() {
+  return supplierId;
+}
+
+export const options = {
+  //stages: [
+    // Morning ramp-up (simulating business hours)
+    // { duration: '3m', target: 10 },   // Early morning
+    // { duration: '5m', target: 30 },   // Peak morning
+    // { duration: '10m', target: 50 },  // Mid-morning peak
+    // Lunch dip
+    // { duration: '2m', target: 30 },   // Lunch reduction
+    // { duration: '3m', target: 30 },   // Sustain lunch level
+    // Afternoon peak
+    // { duration: '5m', target: 60 },   // Afternoon ramp
+    // { duration: '10m', target: 60 },  // Afternoon sustain
+    // Evening wind-down
+    // { duration: '3m', target: 30 },   // Evening reduction
+    // { duration: '2m', target: 10 },   // Late evening
+    // { duration: '2m', target: 0 },    // Night shutdown
+    // Progressive load increase
+    // { duration: '5m', target: 50 },   // Start conservative
+    // { duration: '5m', target: 100 },  // Double the load
+    // { duration: '5m', target: 200 },  // Keep doubling
+    // { duration: '5m', target: 400 },  // Push further
+    // { duration: '5m', target: 800 },  // Find breaking point
+    // { duration: '5m', target: 1600 }, // Push to failure
+    // Gradual recovery
+    { duration: '2m', target: 400 },  // Step back
+    { duration: '2m', target: 100 },  // Further back
+    { duration: '2m', target: 0 },    // Clean shutdown
+//  ],
+  // vus: 1,
+  // duration: "2m",
+};
+
+export default function () {
+  // Prefer built-in globals when available, fall back to execution API values.
+  const vu = typeof __VU !== "undefined" ? __VU : (exec && exec.vu && exec.vu.idInTest) || 0;
+  const iter = typeof __ITER !== "undefined" ? __ITER : (exec && exec.vu && exec.vu.iterationInScenario) || 0;
+  const scenario = exec && exec.scenario ? exec.scenario.name : "default";
+  const time = new Date(Date.now()).toISOString();
+
+  console.log(`VU: ${vu}, Iter: ${iter}, Scenario: ${scenario}, Time: ${time}`);
+  group("Post new supplier", function () {
+    const payload = {
+      supplier_name: randomSupplierName(),
+      contact_person: randomContactName(),
+      email: randomEmail(randomContactName()),
+      phone: randomPhoneNumber(),
+      address: randomAddress(),
+    };
+
+    const res = http.post(
+      `${BASE_URL.ENDPOINT}${SERVICE.POST_NEW_SUPPLIER}`,
+      JSON.stringify(payload),
+      {
+        headers: { "Content-Type": "application/json" },
+      },
+    );
+
+    let body = null;
+    try {
+      body = res.json();
+    } catch (e) {
+      console.warn('POST response not valid JSON', e);
+    }
+
+    // retrieve the newly created supplier ID if present
+    if (body && body.data && body.data.supplier_id) {
+      setSupplierId(body.data.supplier_id);
+      console.log("Created supplier:", getSupplierId());
+    } else {
+      console.warn("Supplier ID not found in POST response", body);
+    }
+
+    check(res, {
+      "status 201": (r) => r.status === 201,
+      "valid JSON": () => body !== null,
+      "has supplier_id": () => body && body.data && body.data.supplier_id,
+    });
+
+    // sleep(Math.random() * 2 + 0.5);
+  });
+
+  group("Delete supplier", function () {
+    const id = getSupplierId();
+    if (!id) {
+      console.warn("No supplier id available to delete; skipping DELETE step.");
+      return;
+    }
+
+    const res = http.del(`${BASE_URL.ENDPOINT}${SERVICE.DEL_SUPPLIER}/${id}`);
+
+    check(res, {
+      "delete status 200 or 204": (r) => r.status === 200 || r.status === 204,
+    });
+    console.log("Deleted supplier:", id);
+
+    setSupplierId(null);
+    // sleep(Math.random() * 2 + 0.5);
+  });
+
+  group("Get all suppliers", function () {
+    const res = http.get(`${BASE_URL.ENDPOINT}${SERVICE.GET_ALL_SUPPLIERS}`);
+
+    let body = null;
+    try {
+      body = res.json();
+    } catch (e) {
+      console.warn('GET response not valid JSON', e);
+    }
+
+    check(res, {
+      "status is 200": (r) => r.status === 200,
+      "valid JSON": () => body !== null,
+      "check response body": () => body && body.success === true,
+    });
+
+    // sleep(Math.random() * 2 + 0.5);
+  });
+}
