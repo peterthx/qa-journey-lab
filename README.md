@@ -37,16 +37,3 @@ cd k6-api
 # run a smoke test
 k6 run tests/smoke/smoke-test.js
 ```
-
-Notes and recommendations
-
-- Remove `test.only` occurrences in Playwright tests before running CI.
-- Do not commit secrets; use `.env` or CI variables for credentials and endpoints.
-- Each test folder includes a README with more details and example commands.
-
-If you'd like, I can:
-- Add helpful `npm` scripts to `playwright-web/package.json`,
-- Remove `test.only` across Playwright tests, or
-- Add a sample `k6-api/.env/settings.js` placeholder.
-
-Tell me which action you want next.
