@@ -4,7 +4,6 @@ import { BASE_URL, SERVICE } from "../../.env/settings.js";
 
 export default function () {
   const res = http.get(`${BASE_URL.ENDPOINT}${SERVICE.GET_ALL_PRODUCTS}`);
-  sleep(1);
 
   check(res, {
     status: (res) => res.status === 200,
@@ -13,4 +12,5 @@ export default function () {
     "response-time": (res) => res.timings.duration < 200,
     "body-length": (res) => res.body.length > 0,
   });
+  sleep(1);
 }
