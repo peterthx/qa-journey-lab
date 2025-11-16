@@ -1,4 +1,4 @@
-# QA Journey Lab
+## QA Journey Lab
 
 This repository contains example automated tests and tools used in the QA Journey Lab exercises:
 
@@ -37,3 +37,7 @@ cd k6-api
 # run a smoke test
 k6 run tests/smoke/smoke-test.js
 ```
+
+## 📝 License
+
+This project is part of the QA Journey Lab. See main repository LICENSE for details.
