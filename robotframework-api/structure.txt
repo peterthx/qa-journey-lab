@@ -1,0 +1,35 @@
+project/
+│
+├── tests/
+│   ├── auth/
+│   │   └── login_tests.robot
+│   ├── users/
+│   │   └── user_tests.robot
+│   └── health_check.robot
+│
+├── resources/
+│   ├── keywords/
+│   │   ├── auth_keywords.resource
+│   │   ├── user_keywords.resource
+│   │   └── common_keywords.resource
+│   │
+│   ├── variables/
+│   │   ├── dev_variables.yaml
+│   │   ├── uat_variables.yaml
+│   │   └── prod_variables.yaml
+│   │
+│   ├── payloads/
+│   │   ├── login_payload.json
+│   │   └── create_user_payload.json
+│   │
+│   └── schema/
+│       ├── user_schema.json
+│       └── login_schema.json
+│
+├── libs/
+│   └── python_custom.py
+│
+├── config/
+│   └── robot.yaml
+│
+└── README.md
