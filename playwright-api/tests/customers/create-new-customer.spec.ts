@@ -28,6 +28,5 @@ test("Create a new customer", async ({ request }) => {
     expect(responseBody.data.address).toBe("string");
     expect(responseBody.data.created_at).toBe("string");
   }
-  console.log(`Created customer with ID: ${responseBody.data.customer_id}`);
-  console.log(`Response Body: ${JSON.stringify(responseBody)}`);
+
 });

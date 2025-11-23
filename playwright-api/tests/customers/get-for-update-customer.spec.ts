@@ -31,6 +31,4 @@ test("Update the customer by ID", async ({ request }) => {
     expect(responseBody.data.address).toBe("string");
     expect(responseBody.data.created_at).toBe("string");
   }
-  console.log(`Updated customer with ID: ${CustomerID}`);
-  console.log(`Response Body: ${JSON.stringify(responseBody)}`);
 });
