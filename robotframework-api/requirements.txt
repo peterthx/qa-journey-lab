@@ -1,5 +1,0 @@
-robotframework==7.0
-robotframework-requests==0.9.5
-robotframework-jsonlibrary==0.5
-robotframework-jsonschemalibrary==1.0.2
-requests==2.32.2

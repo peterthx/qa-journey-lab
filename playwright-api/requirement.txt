@@ -1,0 +1,16 @@
+playwright-api/
+│
+├── tests/
+│   ├── auth/
+│   │   └── login.spec.ts
+│   ├── users/
+│   │   └── get-user.spec.ts
+│   └── utils/
+│       └── apiClient.ts
+│
+├── fixtures/
+│   └── authFixture.ts
+│
+├── playwright.config.ts
+├── package.json
+└── README.md
