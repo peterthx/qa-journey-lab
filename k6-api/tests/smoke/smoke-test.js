@@ -6,7 +6,7 @@ export const options = {
   scenarios: {
     smoke: {
       executor: "constant-vus",
-      vus: 1,
+      vus: 5,
       duration: "1m",
     },
   },

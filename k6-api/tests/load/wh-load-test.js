@@ -20,16 +20,16 @@ function getSupplierId() {
 }
 
 export const options = {
-  // stages: [
-  //   { duration: "1m", target: 5 },    // Warm-up period
-  //   { duration: "2m", target: 15 },   // Normal load period
-  //   { duration: "3m", target: 25 },   // Mini-peak (review/testing together)
-  //   { duration: "2m", target: 15 },   // Back to normal load
-  //   { duration: "1m", target: 0 }   // Cool-down period
-  // ]
+  stages: [
+    { duration: "1m", target: 5 },    // Warm-up period
+    { duration: "2m", target: 15 },   // Normal load period
+    { duration: "3m", target: 25 },   // Mini-peak (review/testing together)
+    { duration: "2m", target: 15 },   // Back to normal load
+    { duration: "1m", target: 0 }   // Cool-down period
+  ]
   // Basic test configuration
-  vus: 1,
-  duration: "2m",
+  // vus: 1,
+  // duration: "2m",
 };
 
 export default function () {
