@@ -1,49 +1,42 @@
-# Playwright Web — QA Journey Lab
+# Playwright (Browser E2E) Tests
 
-This folder contains Playwright end-to-end tests for the Sauce Demo sample site used in the QA Journey Lab.
+This directory contains browser end-to-end tests using Playwright.
 
-**What it is**
-- A small Playwright test suite located in `./tests` that exercises login, cart, and checkout flows.
+## Quick start
 
-**Prerequisites**
-- Node.js (v18+ recommended)
-- Git (optional)
+1.  Navigate to the directory:
 
-**Install dependencies**
-Run these commands from the `playwright-web` folder:
+    ```bash
+    cd playwright-web
+    ```
 
-```bash
-npm install
-# install Playwright browsers (if needed)
-npx playwright install
-```
+2.  Install dependencies:
 
-**Run tests**
-- Run the full test suite:
+    ```bash
+    npm install
+    ```
 
-```bash
-npx playwright test
-```
+3.  Install Playwright browsers:
 
-- Run a single test file:
+    ```bash
+    npx playwright install
+    ```
 
-```bash
-npx playwright test tests/auth/login-success.spec.ts
-npx playwright test tests/cart/add-item.spec.ts
-npx playwright test tests/cart/remove-item.spec.ts 
-```
+4.  Run tests:
 
-- Run a single test by title (grep):
+    ```bash
+    npx playwright test
+    ```
 
-```bash
-npx playwright test -g "Login and Logout flow"
-```
+## Recommended next steps
 
-**View HTML report and traces**
-- After a test run, open the Playwright HTML report:
+-   Remove any `test.only` lines in Playwright tests before CI runs.
+-   Move credentials and endpoints to environment variables or CI secrets.
+-   Add `npm` scripts to `package.json` to simplify common commands.
 
-```bash
-npx playwright show-report
-# or open the generated report file manually
-open playwright-report/index.html
-```
+## More information
+
+-   `playwright.config.ts` — Playwright configuration
+-   `tests/` — Test files
+-   `playwright-report/` — Generated Playwright HTML reports
+-   `test-results/` — Example test artifacts

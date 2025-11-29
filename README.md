@@ -2,9 +2,8 @@
 
 This repository is a collection of example automated tests and supporting utilities used in the QA Journey Lab. It demonstrates three common types of test automation used in modern QA workflows:
 
-- Browser E2E tests using Playwright (`playwright-web/`)
+- Browser E2E tests using Playwright (see `playwright-web/README.md`)
 - API performance and smoke tests using k6 (`k6-api/`)
-- API functional tests using Robot Framework (`robotframework-api/`)
 
 Purpose
 
@@ -15,7 +14,6 @@ Repository layout (top-level)
 ```
 playwright-web/         # Playwright E2E tests + config
 k6-api/                 # k6 smoke & load tests
-robotframework-api/     # Robot Framework API tests
 playwright-report/      # Playwright HTML reports (generated)
 test-results/           # Example test artifacts
 ```
@@ -32,13 +30,7 @@ cd qa-journey-lab
 2. Pick the test suite you want to run and follow the folder README:
 
 - Playwright (browser E2E)
-
-```bash
-cd playwright-web
-npm install
-npx playwright install
-npx playwright test
-```
+    See `playwright-web/README.md`
 
 - k6 (API smoke & load)
 
@@ -51,25 +43,16 @@ k6 run tests/smoke/smoke-test.js
 k6 run --vus 10 --duration 30s tests/load/wh-load-test.js
 ```
 
-- Robot Framework (API functional)
-
-```bash
-cd robotframework-api
-# Create/activate virtualenv, install deps (see folder README)
-robot -d results tests/
-```
-
 Recommended next steps
 
 - Remove any `test.only` lines in Playwright tests before CI runs.
 - Move credentials and endpoints to environment variables or CI secrets.
-- Add `npm` scripts (Playwright) or a `Makefile`/scripts to simplify common commands.
+- Add `npm` scripts to `playwright-web/package.json` (see `playwright-web/README.md`) or a `Makefile`/scripts to simplify common commands.
 
 Where to find more information
 
 - `playwright-web/README.md` — Playwright usage and report instructions
 - `k6-api/README.md` — k6 usage and configuration
-- `robotframework-api/README.md` — Robot Framework setup and test runs
 
 If you want, I can:
 
@@ -80,4 +63,3 @@ If you want, I can:
 ---
 
 **Last updated:** November 19, 2025
-# Run a load test with CLI overrides
