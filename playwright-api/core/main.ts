@@ -80,6 +80,21 @@ function randomEmail(companyName: string): string {
 
     return `${fullLocal}.${num}@${domain}`;
 }
+
+function quantityGenerator(min: number, max: number): number {
+    return Math.floor(Math.random() * 5) + 1;
+}
+
+function unitPriceGenerator(min: number, max: number): number {
+    const randomNumbers = Math.floor(Math.random() *( 99999 - 10000 +1)) + 10000;
+    const price = String(randomNumbers).padStart(5, '0');
+    return Number(price);
+}
+
+function productGerenerator(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 // export functions
 export {
     randomCompanyName,
@@ -87,4 +102,7 @@ export {
     randomEmail,
     randomPhoneNumber,
     randomGetCustomerId,
+    quantityGenerator,
+    unitPriceGenerator,
+    productGerenerator
 };

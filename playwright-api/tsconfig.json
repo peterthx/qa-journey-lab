@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
- "module": "esnext",
+    "module": "esnext",
     "target": "es2017",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "baseUrl": ".",
+    "baseUrl": "."
   }
 }
