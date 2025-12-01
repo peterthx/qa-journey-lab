@@ -26,10 +26,11 @@ export const options = {
     { duration: "3m", target: 25 },   // Mini-peak (review/testing together)
     { duration: "2m", target: 15 },   // Back to normal load
     { duration: "1m", target: 0 }   // Cool-down period
-  ]
-  // Basic test configuration
-  // vus: 1,
-  // duration: "2m",
+  ],  
+  thresholds: {
+    http_req_duration: ["p(95)<500"], // 95% of requests should be below 500ms
+    http_req_failed: ["rate<0.01"],   // Less than 1% of requests should fail
+  },
 };
 
 export default function () {
@@ -96,7 +97,6 @@ export default function () {
     console.log("Deleted supplier:", id);
 
     setSupplierId(null);
-    // sleep(Math.random() * 2 + 0.5);
   });
 
   group("Get all suppliers", function () {
@@ -114,7 +114,5 @@ export default function () {
       "valid JSON": () => body !== null,
       "check response body": () => body && body.success === true,
     });
-
-    // sleep(Math.random() * 2 + 0.5);
   });
 }

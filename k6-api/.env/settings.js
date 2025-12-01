@@ -6,5 +6,6 @@ export const SERVICE = {
   GET_ALL_PRODUCTS: "/api/products",
   POST_NEW_SUPPLIER: "/api/suppliers",
   DEL_SUPPLIER: "/api/suppliers",
-  GET_ALL_SUPPLIERS: "/api/suppliers"
+  GET_ALL_SUPPLIERS: "/api/suppliers",
+  GET_ALL_ORDER_LIST:'/api/orders'
 };
