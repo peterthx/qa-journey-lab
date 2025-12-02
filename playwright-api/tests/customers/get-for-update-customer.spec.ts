@@ -19,7 +19,6 @@ test("Update the customer by ID", async ({ request }) => {
   });
 
   expect(res.status()).toBe(200);
-
   const responseBody = await res.json();
   if (responseBody.status === "") {
     expect(responseBody.success).toBe(true);

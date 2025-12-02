@@ -6,7 +6,6 @@ test("Retrieved the customer by ID", async ({ request }) => {
   const res = await request.get(`/api/customers/${CustomerID}`);
 
   expect(res.status()).toBe(200);
-
   const responseBody = await res.json();
   if (responseBody.status === "") {
     expect(responseBody.success).toBe(true);
