@@ -21,22 +21,28 @@ function getSupplierId() {
 
 export const options = {
   stages: [
-    { duration: "1m", target: 5 },    // Warm-up period
-    { duration: "2m", target: 15 },   // Normal load period
-    { duration: "3m", target: 25 },   // Mini-peak (review/testing together)
-    { duration: "2m", target: 15 },   // Back to normal load
-    { duration: "1m", target: 0 }   // Cool-down period
-  ],  
+    { duration: "1m", target: 5 }, // Warm-up period
+    { duration: "2m", target: 15 }, // Normal load period
+    { duration: "3m", target: 25 }, // Mini-peak (review/testing together)
+    { duration: "2m", target: 15 }, // Back to normal load
+    { duration: "1m", target: 0 }, // Cool-down period
+  ],
   thresholds: {
     http_req_duration: ["p(95)<500"], // 95% of requests should be below 500ms
-    http_req_failed: ["rate<0.01"],   // Less than 1% of requests should fail
+    http_req_failed: ["rate<0.01"], // Less than 1% of requests should fail
   },
 };
 
 export default function () {
   // Prefer built-in globals when available, fall back to execution API values.
-  const vu = typeof __VU !== "undefined" ? __VU : (exec && exec.vu && exec.vu.idInTest) || 0;
-  const iter = typeof __ITER !== "undefined" ? __ITER : (exec && exec.vu && exec.vu.iterationInScenario) || 0;
+  const vu =
+    typeof __VU !== "undefined"
+      ? __VU
+      : (exec && exec.vu && exec.vu.idInTest) || 0;
+  const iter =
+    typeof __ITER !== "undefined"
+      ? __ITER
+      : (exec && exec.vu && exec.vu.iterationInScenario) || 0;
   const scenario = exec && exec.scenario ? exec.scenario.name : "default";
   const time = new Date(Date.now()).toISOString();
 
@@ -55,14 +61,14 @@ export default function () {
       JSON.stringify(payload),
       {
         headers: { "Content-Type": "application/json" },
-      },
+      }
     );
 
     let body = null;
     try {
       body = res.json();
     } catch (e) {
-      console.warn('POST response not valid JSON', e);
+      console.warn("POST response not valid JSON", e);
     }
 
     // retrieve the newly created supplier ID if present
@@ -106,7 +112,7 @@ export default function () {
     try {
       body = res.json();
     } catch (e) {
-      console.warn('GET response not valid JSON', e);
+      console.warn("GET response not valid JSON", e);
     }
 
     check(res, {
