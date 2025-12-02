@@ -15,7 +15,7 @@ test("Create a new customer", async ({ request }) => {
       address: randomFullAddress(),
     },
   });
-  
+
   // verify status code common
   expect(res.status()).toBe(201);
   const responseBody = await res.json();
@@ -30,4 +30,3 @@ test("Create a new customer", async ({ request }) => {
     expect(responseBody.data.created_at).toBe("string");
   }
 });
-
