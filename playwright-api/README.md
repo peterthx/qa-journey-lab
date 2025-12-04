@@ -20,12 +20,10 @@ Follow these instructions to get a copy of the project up and running on your lo
 
 ### Installation
 
-1.  **Clone the repository:**
+1.  **Navigate to the project directory:**
     ```bash
-    git clone https://github.com/your-username/playwright-api.git
     cd playwright-api
     ```
-    *(Note: Replace `https://github.com/your-username/playwright-api.git` with the actual repository URL if different)*
 
 2.  **Install dependencies:**
     ```bash
@@ -88,3 +86,7 @@ After running tests, you can view the HTML test report by executing:
 ```bash
 npx playwright show-report
 ```
+
+---
+
+**Last Updated:** December 4, 2025

@@ -9,20 +9,21 @@ k6-api/
 ├── README.md                 # This file
 ├── tests/
 │   ├── load/
-│   │   └── wh-load-test.js   # Load testing script with supplier CRUD operations
+│   │   ├── wh-load-orders.js   # Load testing script with order creation
+│   │   └── wh-load-supliers.js # Load testing script with supplier CRUD operations
 │   └── smoke/
 │       └── smoke-test.js     # Smoke testing script for basic endpoint validation
 ├── utils/
 │   └── helpers.js            # Helper functions for generating test data
 └── .env/
-    └── settings.js           # Configuration and API endpoints
+    └── settings.js.example   # Example configuration, rename to settings.js
 ```
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- **Node.js** 14+ (for running k6)
+- **Node.js** 14+
 - **k6** installed globally or via npm
 
 Install k6:
@@ -46,6 +47,9 @@ cd k6-api
 # No dependencies to install (k6 is standalone)
 # But if using local node modules:
 npm install
+
+# Create your settings file
+cp .env/settings.js.example .env/settings.js
 ```
 
 ## 📝 Available Tests
@@ -66,7 +70,9 @@ Quick validation that basic API endpoints are healthy and responding.
 k6 run tests/smoke/smoke-test.js
 ```
 
-### 2. Load Test (`tests/load/wh-load-test.js`)
+### 2. Load Tests
+
+#### `tests/load/wh-load-supliers.js`
 
 Comprehensive load testing with supplier CRUD operations and virtual user (VU) simulation.
 
@@ -77,32 +83,40 @@ Comprehensive load testing with supplier CRUD operations and virtual user (VU) s
 - Response validation and error handling
 - Network behavior under load
 
-**Features:**
-- Configurable load stages (ramp-up, sustain, ramp-down)
-- Module-scoped storage for supplier IDs per VU
-- Defensive JSON parsing with try/catch
-- Safe fallback for execution context variables
-
 **Run with default settings:**
 ```bash
-k6 run tests/load/wh-load-test.js
+k6 run tests/load/wh-load-supliers.js
 ```
 
 **Run with custom VU and duration:**
 ```bash
-k6 run --vus 10 --duration 30s tests/load/wh-load-test.js
+k6 run --vus 10 --duration 30s tests/load/wh-load-supliers.js
 ```
 
-**Run with multiple stages (uncomment in script first):**
+#### `tests/load/wh-load-orders.js`
+
+**What it tests:**
+- **POST** Create a new order with randomized data
+- Virtual user context tracking (VU ID, iteration, scenario)
+- Response validation and error handling
+- Network behavior under load
+
+**Run with default settings:**
 ```bash
-k6 run tests/load/wh-load-test.js
+k6 run tests/load/wh-load-orders.js
 ```
+
+**Run with custom VU and duration:**
+```bash
+k6 run --vus 10 --duration 30s tests/load/wh-load-orders.js
+```
+
 
 ## ⚙️ Configuration
 
 ### Environment Settings (`.env/settings.js`)
 
-Update API endpoints and service paths:
+Update API endpoints and service paths in `.env/settings.js`.
 
 ```javascript
 export const BASE_URL = {
@@ -119,7 +133,7 @@ export const SERVICE = {
 
 ### Load Test Stages
 
-Edit `export const options` in `wh-load-test.js` to define load patterns:
+Edit `export const options` in the load test scripts to define load patterns:
 
 ```javascript
 export const options = {
@@ -204,14 +218,14 @@ import { BASE_URL, SERVICE } from "../../.env/settings.js";
 ### Issue: API endpoint timeouts
 **Solution:** Increase timeout or reduce VU count:
 ```bash
-k6 run --vus 5 --duration 30s tests/load/wh-load-test.js
+k6 run --vus 5 --duration 30s tests/load/wh-load-supliers.js
 ```
 
 ### Issue: "No supplier id available to delete"
 **Solution:** This is expected if the POST request fails. Check API response:
 ```javascript
 // Check console logs for "Supplier ID not found in POST response"
-k6 run tests/load/wh-load-test.js --verbose
+k6 run tests/load/wh-load-supliers.js --verbose
 ```
 
 ## 📈 Best Practices
@@ -239,7 +253,7 @@ Run k6 tests in a container:
 docker run -i grafana/k6 run - < tests/smoke/smoke-test.js
 
 # Run load test with options
-docker run -i grafana/k6 run --vus 10 --duration 1m - < tests/load/wh-load-test.js
+docker run -i grafana/k6 run --vus 10 --duration 1m - < tests/load/wh-load-supliers.js
 ```
 
 ## 🔗 Resources
@@ -262,4 +276,4 @@ This project is part of the QA Journey Lab. See main repository LICENSE for deta
 
 ---
 
-**Last Updated:** November 16, 2025
+**Last Updated:** December 4, 2025
