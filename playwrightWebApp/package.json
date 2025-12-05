@@ -1,0 +1,14 @@
+{
+  "name": "playwright-web",
+  "version": "1.0.0",
+  "description": "This folder contains Playwright end-to-end tests for the Sauce Demo sample site used in the QA Journey Lab.",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^24.10.1"
+  }
+}

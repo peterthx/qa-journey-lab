@@ -1,0 +1,31 @@
+# Environment and configuration
+.env
+.env/
+*.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# K6 and test artifacts
+results/
+reports/
+*.html
+dist/
+
+# OS and editor files
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.gradle/
+
+# Logs
+logs/
+*.log
+npm-debug.log*

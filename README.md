@@ -2,9 +2,9 @@
 
 This repository is a collection of example automated tests and supporting utilities used in the QA Journey Lab. It demonstrates three common types of test automation used in modern QA workflows:
 
--   **Browser E2E tests** using Playwright (`playwright-web/`)
--   **API tests** using Playwright (`playwright-api/`)
--   **API performance and smoke tests** using k6 (`k6-api/`)
+-   **Browser E2E tests** using Playwright (`playwrightWebApp/`)
+-   **API tests** using Playwright (`playwrightAPI/`)
+-   **API performance and smoke tests** using k6 (`k6LoadTest/`)
 
 The goal of this repository is to provide small, focused examples that show how to write, run, and report on tests across different tools. Use the included tests as learning material, templates, or a starting point for your own automation.
 
@@ -12,17 +12,17 @@ The goal of this repository is to provide small, focused examples that show how 
 
 ```
 .
-├── k6-api/                 # k6 smoke & load tests
-├── playwright-api/         # Playwright API tests
-├── playwright-web/         # Playwright E2E tests + config
+├── k6LoadTest/                 # k6 smoke & load tests
+├── playwrightAPI/         # Playwright API tests
+├── playwrightWebApp/         # Playwright E2E tests + config
 └── README.md
 ```
 
 ## Projects
 
--   `playwright-web`: E2E tests for a web application, demonstrating basic user interactions and assertions.
--   `playwright-api`: API tests, showing how to make requests and validate responses.
--   `k6-api`: Performance tests for an API, including smoke and load testing scenarios.
+-   `playwrightWebApp`: E2E tests for a web application, demonstrating basic user interactions and assertions.
+-   `playwrightAPI`: API tests, showing how to make requests and validate responses.
+-   `k6LoadTest`: Performance tests for an API, including smoke and load testing scenarios.
 
 ## Getting Started
 
@@ -43,13 +43,13 @@ The goal of this repository is to provide small, focused examples that show how 
 2.  Install dependencies for each project:
 
     ```bash
-    # For playwright-web
-    cd playwright-web
+    # For playwrightWebApp
+    cd playwrightWebApp
     npm install
     npx playwright install
 
-    # For playwright-api
-    cd ../playwright-api
+    # For playwrightAPI
+    cd ../playwrightAPI
     npm install
     ```
 
@@ -57,34 +57,59 @@ The goal of this repository is to provide small, focused examples that show how 
 
 -   **Playwright (Browser E2E)**
 
-    For detailed instructions, see the `playwright-web/README.md`.
+    For detailed instructions, see the `playwrightWebApp/README.md`.
 
     ```bash
-    cd playwright-web
+    cd playwrightWebApp
     npx playwright test
     ```
 
 -   **Playwright (API)**
 
-    For detailed instructions, see the `playwright-api/README.md`.
+    For detailed instructions, see the `playwrightAPI/README.md`.
 
     ```bash
-    cd playwright-api
+    cd playwrightAPI
     npx playwright test
     ```
 
 -   **k6 (API smoke & load)**
 
-    For detailed instructions, see the `k6-api/README.md`.
+    For detailed instructions, see the `k6LoadTest/README.md`.
 
     ```bash
-    cd k6-api
+    cd k6LoadTest
 
     # Run a smoke test
     k6 run tests/smoke/smoke-test.js
 
     # Run a load test with CLI overrides
     k6 run --vus 10 --duration 30s tests/load/wh-load-orders.js
+    ```
+
+## Pre-commit Validation
+
+Before committing your changes, it is recommended to run the following tests to ensure code quality and prevent regressions:
+
+-   **Playwright Web App (E2E)**
+
+    ```bash
+    cd playwrightWebApp
+    npx playwright test
+    ```
+
+-   **Playwright API**
+
+    ```bash
+    cd playwrightAPI
+    npx playwright test
+    ```
+
+-   **k6 Load Test (Smoke)**
+
+    ```bash
+    cd k6LoadTest
+    k6 run tests/smoke/smoke-test.js
     ```
 
 ## Contributing
