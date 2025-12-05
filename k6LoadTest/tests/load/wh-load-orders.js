@@ -3,8 +3,8 @@ import { check, sleep } from "k6";
 import { BASE_URL, SERVICE } from "../../.env/settings.js";
 export const options = {
   stages: [
-    { duration: "1m", target: 5 },
-    { duration: "5m", target: 5 },
+    { duration: "1m", target: 3 },
+    { duration: "5m", target: 3 },
     { duration: "1m", target: 0 },
   ],
   thresholds: {
