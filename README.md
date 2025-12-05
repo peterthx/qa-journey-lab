@@ -111,11 +111,6 @@ Before committing your changes, it is recommended to run the following tests to 
     cd k6LoadTest
     k6 run tests/smoke/smoke-test.js
     ```
-
-## Contributing
-
-Contributions are welcome! If you have any suggestions or find any issues, please open an issue or submit a pull request.
-
 ---
 
-**Last updated:** December 4, 2025
+**Last updated:** December 5, 2025
