@@ -1,15 +1,6 @@
 import http from "k6/http";
-import { check, group, sleep } from "k6";
-// import exec from "k6/execution";
+import { check, sleep } from "k6";
 import { BASE_URL, SERVICE } from "../../.env/settings.js";
-// import {
-//   randomSupplierName,
-//   randomContactName,
-//   randomEmail,
-//   randomPhoneNumber,
-//   randomAddress,
-// } from "../../utils/helpers.js";
-
 export const options = {
   iterations: 50,
   vus: 5,
@@ -21,7 +12,6 @@ export const options = {
 
 export default function () {
   const res = http.get(`${BASE_URL.ENDPOINT}${SERVICE.GET_ALL_ORDER_LIST}`);
-  const body = res.json();
   check(res, {
     "status is 200": (r) => r.status === 200,
     "status is success": (r) => r.json().success === true,
