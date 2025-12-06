@@ -28,7 +28,7 @@ The goal of this repository is to provide small, focused examples that show how 
 
 ### Prerequisites
 
--   [Node.js](https://nodejs.org/) (v16+)
+-   [Node.js](https://nodejs.org/) (v20+)
 -   [k6](https://k6.io/docs/getting-started/installation/)
 
 ### Installation
@@ -40,16 +40,9 @@ The goal of this repository is to provide small, focused examples that show how 
     cd qa-journey-lab
     ```
 
-2.  Install dependencies for each project:
+2.  Install dependencies for all projects using npm workspaces:
 
     ```bash
-    # For playwrightWebApp
-    cd playwrightWebApp
-    npm install
-    npx playwright install
-
-    # For playwrightAPI
-    cd ../playwrightAPI
     npm install
     ```
 
@@ -57,20 +50,14 @@ The goal of this repository is to provide small, focused examples that show how 
 
 -   **Playwright (Browser E2E)**
 
-    For detailed instructions, see the `playwrightWebApp/README.md`.
-
     ```bash
-    cd playwrightWebApp
-    npx playwright test
+    npm run test:webapp
     ```
 
 -   **Playwright (API)**
 
-    For detailed instructions, see the `playwrightAPI/README.md`.
-
     ```bash
-    cd playwrightAPI
-    npx playwright test
+    npm run test:api
     ```
 
 -   **k6 (API smoke & load)**
@@ -87,6 +74,67 @@ The goal of this repository is to provide small, focused examples that show how 
     k6 run --vus 10 --duration 30s tests/load/wh-load-orders.js
     ```
 
+## Continuous Integration
+
+This repository is configured with a `Jenkinsfile` to automatically run tests and archive the results. The pipeline is configured to run the API and WebApp tests in parallel to speed up the process.
+
+Here is the configuration of the `Jenkinsfile`:
+
+```groovy
+pipeline {
+    agent any
+
+    tools {
+        nodejs 'nodejs-20'
+    }
+
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Run Tests') {
+            parallel {
+                stage('Run API Tests') {
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'npm run test:api'
+                        }
+                    }
+                    post {
+                        always {
+                            archiveArtifacts artifacts: 'playwrightAPI/playwright-report/', allowEmptyArchive: true
+                            archiveArtifacts artifacts: 'playwrightAPI/test-results/', allowEmptyArchive: true
+                        }
+                    }
+                }
+
+                stage('Run WebApp Tests') {
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh 'npm run test:webapp'
+                        }
+                    }
+                    post {
+                        always {
+                            archiveArtifacts artifacts: 'playwrightWebApp/playwright-report/', allowEmptyArchive: true
+                            archiveArtifacts artifacts: 'playwrightWebApp/test-results/', allowEmptyArchive: true
+                        }
+                    }
+                }
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
+```
+
 ## Pre-commit Validation
 
 Before committing your changes, it is recommended to run the following tests to ensure code quality and prevent regressions:
@@ -94,15 +142,13 @@ Before committing your changes, it is recommended to run the following tests to 
 -   **Playwright Web App (E2E)**
 
     ```bash
-    cd playwrightWebApp
-    npx playwright test
+    npm run test:webapp
     ```
 
 -   **Playwright API**
 
     ```bash
-    cd playwrightAPI
-    npx playwright test
+    npm run test:api
     ```
 
 -   **k6 Load Test (Smoke)**
@@ -113,4 +159,4 @@ Before committing your changes, it is recommended to run the following tests to 
     ```
 ---
 
-**Last updated:** December 5, 2025
+**Last updated:** December 6, 2025
