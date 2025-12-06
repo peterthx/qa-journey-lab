@@ -4,13 +4,13 @@ pipeline {
     stages {
         stage('Install Dependencies') {
             steps {
-                dir('qa-journey-lab')
                 sh 'npm install'
             }
         }
 
         stage('Run API Tests') {
             steps {
+                dir('playwrightAPI')
                 sh 'npm run test:api || true'
             }
             post {
@@ -23,6 +23,7 @@ pipeline {
 
         stage('Run WebApp Tests') {
             steps {
+                dir('playwrightWebApp')
                 sh 'npm run test:webapp || true'
             }
             post {
