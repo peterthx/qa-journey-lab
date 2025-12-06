@@ -4,6 +4,7 @@ pipeline {
     stages {
         stage('Install Dependencies') {
             steps {
+                dir('qa-journey-lab')
                 sh 'npm install'
             }
         }
