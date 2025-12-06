@@ -4,8 +4,8 @@
   "description": "A monorepo for Playwright tests.",
   "main": "index.js",
   "scripts": {
-    "test:api": "npm test --workspace=playwright-api",
-    "test:webapp": "npm test --workspace=playwright-web"
+    "test:api": "npm test --workspace=playwrightAPI",
+    "test:webapp": "npm test --workspace=playwrightWebApp"
   },
   "keywords": [],
   "author": "",
