@@ -13,8 +13,8 @@ The goal of this repository is to provide small, focused examples that show how 
 ```
 .
 ├── k6LoadTest/                 # k6 smoke & load tests
-├── playwrightAPI/         # Playwright API tests
-├── playwrightWebApp/         # Playwright E2E tests + config
+├── playwrightAPI/              # Playwright API tests
+├── playwrightWebApp/           # Playwright E2E tests + config
 └── README.md
 ```
 
