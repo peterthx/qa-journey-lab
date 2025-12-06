@@ -21,7 +21,7 @@ test.describe("Login Form Tests", () => {
     await expect(page).toHaveURL("https://www.saucedemo.com/");
   });
 
-    test("Login and Logout problem user #2", async ({ page }) => {
+  test("Login and Logout problem user #2", async ({ page }) => {
     // Login
     await page.locator('[data-test="username"]').fill("problem_user");
     await page.locator('[data-test="password"]').fill("secret_sauce");
@@ -38,7 +38,7 @@ test.describe("Login Form Tests", () => {
     await expect(page).toHaveURL("https://www.saucedemo.com/");
   });
 
-      test("Login and Logout visual user #3", async ({ page }) => {
+  test("Login and Logout visual user #3", async ({ page }) => {
     // Login
     await page.locator('[data-test="username"]').fill("visual_user");
     await page.locator('[data-test="password"]').fill("secret_sauce");
@@ -54,5 +54,4 @@ test.describe("Login Form Tests", () => {
     // logout success (back to login page)
     await expect(page).toHaveURL("https://www.saucedemo.com/");
   });
-
 });
