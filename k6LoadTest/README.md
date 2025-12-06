@@ -1,11 +1,11 @@
-# K6 API Load & Smoke Testing
+# k6LoadTest - K6 API Load & Smoke Testing
 
 This project contains **k6** performance and load tests for API endpoints. K6 is a modern load testing framework designed for testing APIs, microservices, and websites.
 
 ## 📋 Project Structure
 
 ```
-k6-api/
+k6LoadTest/
 ├── README.md                 # This file
 ├── tests/
 │   ├── load/
@@ -23,32 +23,24 @@ k6-api/
 
 ### Prerequisites
 
-- **Node.js** 14+
-- **k6** installed globally or via npm
+- **Node.js** 14+ (for helper functions)
+- **k6** installed. See [k6 installation guide](https://k6.io/docs/getting-started/installation/) for details.
 
-Install k6:
+### Installation
+
 ```bash
 # Using Homebrew (macOS)
 brew install k6
-
-# Using npm
-npm install -g k6
 
 # Or using docker
 docker run -i grafana/k6 run - < script.js
 ```
 
-### Installation
-
 ```bash
 # Clone or navigate to the project
-cd k6-api
+cd k6LoadTest
 
-# No dependencies to install (k6 is standalone)
-# But if using local node modules:
-npm install
-
-# Create your settings file
+# Create your settings file inside the .env directory
 cp .env/settings.js.example .env/settings.js
 ```
 
@@ -276,4 +268,4 @@ This project is part of the QA Journey Lab. See main repository LICENSE for deta
 
 ---
 
-**Last Updated:** December 4, 2025
+**Last Updated:** December 6, 2025
