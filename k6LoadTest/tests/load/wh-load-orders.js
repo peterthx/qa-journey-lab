@@ -23,8 +23,7 @@ export default function () {
       typeof r.json().data[0].customer_name === "string",
     "warehouse name is valid": (r) =>
       typeof r.json().data[0].warehouse_name === "string",
-    "order date is valid": (r) =>
-      typeof r.json().data[0].order_date === "string",
+    "order date is valid": (r) => r.json().data[0].order_date === "string",
     "status is valid": (r) => typeof r.json().data[0].status === "string",
     "total items is valid": (r) =>
       typeof r.json().data[0].total_items === "string",
