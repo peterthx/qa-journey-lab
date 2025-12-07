@@ -1,3 +1,15 @@
+// Define helper function at the top
+def runTestSuite(String testType, String reportDir) {
+    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+        sh "npm run test:${testType}"
+    }
+    
+    archiveArtifacts(
+        artifacts: "${reportDir}/playwright-report/,${reportDir}/test-results/",
+        allowEmptyArchive: true
+    )
+}
+
 pipeline {
     agent any
 
@@ -12,34 +24,23 @@ pipeline {
             parallel {
                 stage('Run API Tests') {
                     steps {
-                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                            sh 'npm run test:api'
-                        }
-                    }
-                    post {
-                        always {
-                            archiveArtifacts artifacts: 'playwrightAPI/playwright-report/', allowEmptyArchive: true
-                            archiveArtifacts artifacts: 'playwrightAPI/test-results/', allowEmptyArchive: true
+                        script {
+                            runTestSuite('api', 'playwrightAPI')
                         }
                     }
                 }
 
                 stage('Run WebApp Tests') {
                     steps {
-                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                            sh 'npm run test:webapp'
-                        }
-                    }
-                    post {
-                        always {
-                            archiveArtifacts artifacts: 'playwrightWebApp/playwright-report/', allowEmptyArchive: true
-                            archiveArtifacts artifacts: 'playwrightWebApp/test-results/', allowEmptyArchive: true
+                        script {
+                            runTestSuite('webapp', 'playwrightWebApp')
                         }
                     }
                 }
             }
         }
     }
+    
     post {
         always {
             cleanWs()
