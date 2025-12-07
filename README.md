@@ -8,21 +8,13 @@ This repository is a collection of example automated tests and supporting utilit
 
 The goal of this repository is to provide small, focused examples that show how to write, run, and report on tests across different tools. Use the included tests as learning material, templates, or a starting point for your own automation.
 
-## Repository Layout
+## Projects in this Repository
 
-```
-.
-├── k6LoadTest/                 # k6 smoke & load tests
-├── playwrightAPI/              # Playwright API tests
-├── playwrightWebApp/           # Playwright E2E tests + config
-└── README.md
-```
-
-## Projects
-
--   `playwrightWebApp`: E2E tests for a web application, demonstrating basic user interactions and assertions.
--   `playwrightAPI`: API tests, showing how to make requests and validate responses.
--   `k6LoadTest`: Performance tests for an API, including smoke and load testing scenarios.
+| Project                               | Description                                                                                              |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| [`k6LoadTest/`](./k6LoadTest)         | Performance tests for an API, including smoke and load testing scenarios.                                  |
+| [`playwrightAPI/`](./playwrightAPI)   | API tests, demonstrating how to make requests and validate responses using Playwright.                   |
+| [`playwrightWebApp/`](./playwrightWebApp) | E2E tests for a web application, demonstrating basic user interactions and assertions with Playwright. |
 
 ## Getting Started
 
@@ -46,39 +38,44 @@ The goal of this repository is to provide small, focused examples that show how 
     npm install
     ```
 
-### Running Tests
+## Running Tests
 
--   **Playwright (Browser E2E)**
+Before committing your changes, it is recommended to run the following tests to ensure code quality and prevent regressions.
 
-    ```bash
-    npm run test:webapp
-    ```
+### Playwright (Browser E2E)
 
--   **Playwright (API)**
+```bash
+npm run test:webapp
+```
 
-    ```bash
-    npm run test:api
-    ```
+### Playwright (API)
 
--   **k6 (API smoke & load)**
+```bash
+npm run test:api
+```
 
-    For detailed instructions, see the `k6LoadTest/README.md`.
+### k6 (API Smoke Test)
 
-    ```bash
-    cd k6LoadTest
+For detailed instructions on all k6 tests, see the [`k6LoadTest/README.md`](./k6LoadTest/README.md).
 
-    # Run a smoke test
-    k6 run tests/smoke/smoke-test.js
+```bash
+cd k6LoadTest
+k6 run tests/smoke/smoke-test.js
+```
 
-    # Run a load test with CLI overrides
-    k6 run --vus 10 --duration 30s tests/load/wh-load-orders.js
-    ```
+### k6 (API Load Test)
+
+```bash
+cd k6LoadTest
+k6 run --vus 10 --duration 30s tests/load/wh-load-orders.js
+```
 
 ## Continuous Integration
 
-This repository is configured with a `Jenkinsfile` to automatically run tests and archive the results. The pipeline is configured to run the API and WebApp tests in parallel to speed up the process.
+This repository is configured with a `Jenkinsfile` to automatically run tests and archive the results. The pipeline runs the API and WebApp tests in parallel to speed up the process.
 
-Here is the configuration of the `Jenkinsfile`:
+<details>
+<summary>Click to view the Jenkinsfile configuration</summary>
 
 ```groovy
 pipeline {
@@ -134,29 +131,8 @@ pipeline {
     }
 }
 ```
+</details>
 
-## Pre-commit Validation
-
-Before committing your changes, it is recommended to run the following tests to ensure code quality and prevent regressions:
-
--   **Playwright Web App (E2E)**
-
-    ```bash
-    npm run test:webapp
-    ```
-
--   **Playwright API**
-
-    ```bash
-    npm run test:api
-    ```
-
--   **k6 Load Test (Smoke)**
-
-    ```bash
-    cd k6LoadTest
-    k6 run tests/smoke/smoke-test.js
-    ```
 ---
 
-**Last updated:** December 6, 2025
+**Last updated:** December 7, 2025
