@@ -80,7 +80,7 @@ export default function () {
     }
 
     check(res, {
-      "status 201": (r) => r.status === 201,
+      "status is 201": (r) => r.status === 201,
       "valid JSON": () => body !== null,
       "has supplier_id": () => body && body.data && body.data.supplier_id,
     });

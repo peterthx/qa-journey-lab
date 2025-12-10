@@ -1,8 +1,16 @@
 function randomAddress() {
   const streets = [
-    "El Camino Real", "Middlefield Rd", "Castro St", "University Ave",
-    "Stevens Creek Blvd", "Alma St", "Central Expy", "Homestead Rd",
-    "San Antonio Rd", "Page Mill Rd", "Shoreline Blvd"
+    "El Camino Real",
+    "Middlefield Rd",
+    "Castro St",
+    "University Ave",
+    "Stevens Creek Blvd",
+    "Alma St",
+    "Central Expy",
+    "Homestead Rd",
+    "San Antonio Rd",
+    "Page Mill Rd",
+    "Shoreline Blvd",
   ];
 
   const cities = [
@@ -14,13 +22,28 @@ function randomAddress() {
     "Cupertino",
     "Menlo Park",
     "Redwood City",
-    "San Jose"
+    "San Jose",
   ];
 
   const zipcodes = [
-    "94022", "94024", "94025", "94040", "94041", "94043",
-    "94085", "94086", "94087", "94089", "94301", "94303",
-    "95014", "95050", "95051", "95054", "95110", "95112"
+    "94022",
+    "94024",
+    "94025",
+    "94040",
+    "94041",
+    "94043",
+    "94085",
+    "94086",
+    "94087",
+    "94089",
+    "94301",
+    "94303",
+    "95014",
+    "95050",
+    "95051",
+    "95054",
+    "95110",
+    "95112",
   ];
 
   // -------------------- HELPERS --------------------
@@ -43,7 +66,7 @@ function randomSupplierName() {
     "Premium Tech Supplies",
     "Global Nexus Corp",
     "Apex Integrated Solutions",
-    "BlueStone Distribution"
+    "BlueStone Distribution",
   ];
   return names[Math.floor(Math.random() * names.length)];
 }
@@ -54,7 +77,7 @@ function randomContactName() {
     "Alex Johnson",
     "Sophia Carter",
     "Michael Lee",
-    "Emma Rodriguez"
+    "Emma Rodriguez",
   ];
   return names[Math.floor(Math.random() * names.length)];
 }
@@ -67,8 +90,35 @@ function randomEmail(name) {
 }
 
 function randomPhoneNumber() {
-  const phone = `555-${Math.floor(100 + Math.random() * 900)}-${Math.floor(1000 + Math.random() * 9000)}`;
+  const phone = `555-${Math.floor(100 + Math.random() * 900)}-${Math.floor(
+    1000 + Math.random() * 9000
+  )}`;
   return phone;
 }
 
-export { randomSupplierName, randomContactName, randomEmail, randomPhoneNumber, randomAddress };
+function randomOrderID() {
+  const orderID = Math.floor(Math.random() * 10) + 1;
+  return orderID;
+}
+
+function randomUnitPrice() {
+  const randomNumber = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000;
+  const sixDigitNumber = String(randomNumber).padStart(5, "0");
+  return sixDigitNumber;
+}
+
+function randomQuantity() {
+  const quantity = Math.floor(Math.random() * 5) + 1;
+  return quantity;
+}
+
+export {
+  randomSupplierName,
+  randomContactName,
+  randomEmail,
+  randomPhoneNumber,
+  randomAddress,
+  randomOrderID,
+  randomUnitPrice,
+  randomQuantity,
+};
