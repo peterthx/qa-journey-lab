@@ -1,5 +1,5 @@
 #!/bin/bash
-# This script runs the Playwright Webapp tests.
+# This script runs the Playwright Web App tests.
 
 echo "Navigating to playwrightWebApp directory..."
 cd playwrightAPI
