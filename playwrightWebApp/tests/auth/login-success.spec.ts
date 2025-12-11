@@ -1,14 +1,16 @@
 import { test, expect } from "@playwright/test";
+import { LoginPage } from "../../pages/auth/LoginPage";
 
 test.describe("Login Form Tests", () => {
+  let loginPage: LoginPage;
+
   test.beforeEach(async ({ page }) => {
-    await page.goto("https://www.saucedemo.com/");
+    loginPage = new LoginPage(page);
+    await loginPage.navigate();
   });
   test("Login and Logout normal user #1", async ({ page }) => {
     // Login
-    await page.locator('[data-test="username"]').fill("standard_user");
-    await page.locator('[data-test="password"]').fill("secret_sauce");
-    await page.locator('[data-test="login-button"]').click();
+    await loginPage.login("standard_user", "secret_sauce");
 
     // login success
     await expect(page).toHaveURL(/inventory.html/);
@@ -18,14 +20,12 @@ test.describe("Login Form Tests", () => {
     await page.locator('[data-test="logout-sidebar-link"]').click();
 
     // logout success (back to login page)
-    await expect(page).toHaveURL("https://www.saucedemo.com/");
+    await expect(page).toHaveURL("/");
   });
 
   test("Login and Logout problem user #2", async ({ page }) => {
     // Login
-    await page.locator('[data-test="username"]').fill("problem_user");
-    await page.locator('[data-test="password"]').fill("secret_sauce");
-    await page.locator('[data-test="login-button"]').click();
+    await loginPage.login("problem_user", "secret_sauce");
 
     // login success
     await expect(page).toHaveURL(/inventory.html/);
@@ -35,14 +35,12 @@ test.describe("Login Form Tests", () => {
     await page.locator('[data-test="logout-sidebar-link"]').click();
 
     // logout success (back to login page)
-    await expect(page).toHaveURL("https://www.saucedemo.com/");
+    await expect(page).toHaveURL("/");
   });
 
   test("Login and Logout visual user #3", async ({ page }) => {
     // Login
-    await page.locator('[data-test="username"]').fill("visual_user");
-    await page.locator('[data-test="password"]').fill("secret_sauce");
-    await page.locator('[data-test="login-button"]').click();
+    await loginPage.login("visual_user", "secret_sauce");
 
     // login success
     await expect(page).toHaveURL(/inventory.html/);
@@ -52,6 +50,6 @@ test.describe("Login Form Tests", () => {
     await page.locator('[data-test="logout-sidebar-link"]').click();
 
     // logout success (back to login page)
-    await expect(page).toHaveURL("https://www.saucedemo.com/");
+    await expect(page).toHaveURL("/");
   });
 });
