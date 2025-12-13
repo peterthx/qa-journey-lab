@@ -18,7 +18,7 @@ export class InventoryPage {
   readonly removeSauceLabsBoltTshirtButton: Locator;
   readonly removeSauceLabsOnesieButton: Locator;
   readonly removeSauceLabsBikeLightButton: Locator;
-  readonly removeSaucelabsFleeceJacketButton: Locator;
+  readonly removeSauceLabsFleeceJacketButton: Locator;
   readonly removeAllTheThingsTshirtRedButton: Locator;
 
   constructor(page: Page) {
@@ -41,7 +41,7 @@ export class InventoryPage {
       '[data-test="add-to-cart-sauce-labs-bike-light"]'
     );
     this.addToCartSauceLabsFleeceJacketButton = page.locator(
-      'data-test="add-to-cart-sauce-labs-fleece-jacket"'
+      '[data-test="add-to-cart-sauce-labs-fleece-jacket"]'
     );
     this.addToCartAllTheThingsShirtRedButton = page.locator(
       '[data-test="add-to-cart-test.allthethings()-t-shirt-(red)"]'
@@ -60,7 +60,7 @@ export class InventoryPage {
     this.removeSauceLabsBikeLightButton = page.locator(
       '[data-test="remove-sauce-labs-bike-light"]'
     );
-    this.removeSaucelabsFleeceJacketButton = page.locator(
+    this.removeSauceLabsFleeceJacketButton = page.locator(
       '[data-test="remove-sauce-labs-fleece-jacket"]'
     );
     this.removeAllTheThingsTshirtRedButton = page.locator(

@@ -12,6 +12,7 @@ export class CheckoutPage {
   readonly taxLabel: Locator;
   readonly totalLabel: Locator;
   readonly logoutButton: Locator;
+  readonly openMenuButton: Locator;
 
 
   constructor(page: Page) {
@@ -26,6 +27,7 @@ export class CheckoutPage {
     this.taxLabel = page.locator('[data-test="tax-label"]');
     this.totalLabel = page.locator('[data-test="total-label"]');
     this.logoutButton = page.locator('[data-test="logout-sidebar-link"]');
+    this.openMenuButton = page.getByRole("button", { name: "Open Menu" });
   }
 
   async inputAddress(firstName: string, lastName: string, postalCode: string) {
@@ -41,6 +43,10 @@ export class CheckoutPage {
 
   async backToProducts() {
       await this.backToProductsButton.click();
+  }
+
+  async openMenu() {
+    await this.openMenuButton.click();
   }
 
   async logout() {
