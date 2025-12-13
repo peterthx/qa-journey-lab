@@ -1,44 +1,45 @@
 import { test, expect } from "@playwright/test";
 import { LoginPage } from "../../pages/auth/LoginPage";
+import { InventoryPage } from "../../pages/inventory/InventoryPage";
+import { CartPage } from "../../pages/cart/CartPage";
+import { CheckoutPage } from "../../pages/cart/CheckoutPage";
 
 test.describe("Shopping Cart Tests", () => {
   let loginPage: LoginPage;
+  let inventoryPage: InventoryPage;
+  let cartPage: CartPage;
+  let checkoutPage: CheckoutPage;
+
 
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
+    inventoryPage = new InventoryPage(page);
     await loginPage.navigate();
-  });
-
-  test("User can add 1 item to the cart and remove 1 item from the cart", async ({
-    page,
-  }) => {
-    // login
     await loginPage.login("standard_user", "secret_sauce");
 
-    // add a single item and next to your cart remove item
-    await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
-    await expect(
-      page.locator('[data-test="shopping-cart-link"]')
-    ).toContainText("1");
-    await page.locator('[data-test="shopping-cart-link"]').click();
-    await page.locator('[data-test="remove-sauce-labs-backpack"]').click();
-    await page.locator('[data-test="continue-shopping"]').click();
+  });
 
-    // add a single item and can remove item
-    await page
-      .locator('[data-test="add-to-cart-test.allthethings()-t-shirt-(red)"]')
-      .click();
-    await expect(
-      page.locator('[data-test="shopping-cart-link"]')
-    ).toContainText("1");
-    await page
-      .locator('[data-test="remove-test.allthethings()-t-shirt-(red)"]')
-      .click();
+  test("User can add 1 item to the cart and remove 1 item from the cart", async ({page}) => {
+    cartPage = new CartPage(page);
+    checkoutPage = new CheckoutPage(page);
+
+    // add a single item and next to your cart remove item
+    await inventoryPage.addToCartSauceBackpackButton.click();
+    await expect(inventoryPage.cartLink).toContainText("1");
+    await inventoryPage.cartShopLink.click();
+    await inventoryPage.removeSauceLabsBackpackButton.click();
 
     // verify after remove items
-    await expect(
-      page.locator('[data-test="shopping-cart-link"]')
-    ).toContainText("");
+    await expect(inventoryPage.cartLink).toContainText("");
+    await cartPage.continueShoppingButton.click();
+
+    // add a single item and can remove item
+    await inventoryPage.addToCartAllTheThingsShirtRedButton.click();
+    await expect(inventoryPage.cartLink).toContainText("1");
+    await inventoryPage.removeAllTheThingsTshirtRedButton.click();
+
+    // verify after remove items
+    await expect(inventoryPage.cartLink).toContainText("");
 
     // logout
     await page.getByRole("button", { name: "Open Menu" }).click();
@@ -50,8 +51,6 @@ test.describe("Shopping Cart Tests", () => {
   });
 
   test("User can add multiple items to the cart", async ({ page }) => {
-    // login
-    await loginPage.login("standard_user", "secret_sauce");
 
     // add multiple items
     await page
@@ -114,8 +113,6 @@ test.describe("Shopping Cart Tests", () => {
   });
 
   test("User can remove all items from the cart", async ({ page }) => {
-    // login
-    await loginPage.login("standard_user", "secret_sauce");
 
     // cleanup webpage
     await page.getByRole("button", { name: "Open Menu" }).click();

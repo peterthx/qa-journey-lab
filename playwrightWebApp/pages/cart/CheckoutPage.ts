@@ -11,6 +11,8 @@ export class CheckoutPage {
   readonly subtotalLabel: Locator;
   readonly taxLabel: Locator;
   readonly totalLabel: Locator;
+  readonly logoutButton: Locator;
+
 
   constructor(page: Page) {
     this.page = page;
@@ -23,6 +25,7 @@ export class CheckoutPage {
     this.subtotalLabel = page.locator('[data-test="subtotal-label"]');
     this.taxLabel = page.locator('[data-test="tax-label"]');
     this.totalLabel = page.locator('[data-test="total-label"]');
+    this.logoutButton = page.locator('[data-test="logout-sidebar-link"]');
   }
 
   async inputAddress(firstName: string, lastName: string, postalCode: string) {
@@ -38,5 +41,9 @@ export class CheckoutPage {
 
   async backToProducts() {
       await this.backToProductsButton.click();
+  }
+
+  async logout() {
+    await this.logoutButton.click();
   }
 }

@@ -3,6 +3,9 @@ import { Page, Locator } from "@playwright/test";
 export class InventoryPage {
   readonly page: Page;
   readonly cartLink: Locator;
+  readonly cartShopLink: Locator;
+
+  // add items
   readonly addToCartSauceBackpackButton: Locator;
   readonly addToCartSaucelabsBoltTshirtButton: Locator;
   readonly addToCartSauceLabsOnesieButton: Locator;
@@ -21,6 +24,8 @@ export class InventoryPage {
   constructor(page: Page) {
     this.page = page;
     this.cartLink = page.locator(".shopping_cart_link");
+    this.cartShopLink = page.locator('[data-test="shopping-cart-link"]');
+
 
     // add item
     this.addToCartSauceBackpackButton = page.locator(
