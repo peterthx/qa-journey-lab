@@ -153,6 +153,7 @@ test.describe("Shopping Cart Tests", () => {
     await inventoryPage.removeSauceLabsBackpackButton.click();
     await inventoryPage.removeSauceLabsBoltTshirtButton.click();
     await inventoryPage.removeSauceLabsOnesieButton.click();
+    
 
     // verify after remove items
     await expect(
