@@ -120,6 +120,7 @@ test.describe("Shopping Cart Tests", () => {
     await expect(reset).toBeVisible();
     await page.locator('[data-test="reset-sidebar-link"]').click();
 
+
     // Add all item (left side)
     await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
     await page
@@ -146,14 +147,12 @@ test.describe("Shopping Cart Tests", () => {
     await page.locator('[data-test="continue-shopping"]').click();
 
     // remove all items
-    await page
-      .locator('[data-test="remove-test.allthethings()-t-shirt-(red)"]')
-      .click();
-    await page.locator('[data-test="remove-sauce-labs-fleece-jacket"]').click();
-    await page.locator('[data-test="remove-sauce-labs-bike-light"]').click();
-    await page.locator('[data-test="remove-sauce-labs-backpack"]').click();
-    await page.locator('[data-test="remove-sauce-labs-bolt-t-shirt"]').click();
-    await page.locator('[data-test="remove-sauce-labs-onesie"]').click();
+    await inventoryPage.removeAllTheThingsTshirtRedButton.click();
+    await inventoryPage.removeSaucelabsFleeceJacketButton.click();
+    await inventoryPage.removeSauceLabsBikeLightButton.click();
+    await inventoryPage.removeSauceLabsBackpackButton.click();
+    await inventoryPage.removeSauceLabsBoltTshirtButton.click();
+    await inventoryPage.removeSauceLabsOnesieButton.click();
 
     // verify after remove items
     await expect(
