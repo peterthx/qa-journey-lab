@@ -3,21 +3,63 @@ import { Page, Locator } from "@playwright/test";
 export class InventoryPage {
   readonly page: Page;
   readonly cartLink: Locator;
-  readonly addToCartBackpackButton: Locator;
-  readonly addToCartBoltTshirtButton: Locator;
-  readonly addToCartBikeLightButton: Locator;
+  readonly addToCartSauceBackpackButton: Locator;
+  readonly addToCartSaucelabsBoltTshirtButton: Locator;
+  readonly addToCartSauceLabsOnesieButton: Locator;
+  readonly addToCartSauceLabsBikeLightButton: Locator;
+  readonly addToCartSauceLabsFleeceJacketButton: Locator;
+  readonly addToCartAllTheThingsShirtRedButton: Locator;
+
+  // remove items
+  readonly removeSauceLabsBackpackButton: Locator;
+  readonly removeSauceLabsBoltTshirtButton: Locator;
+  readonly removeSauceLabsOnesieButton: Locator;
+  readonly removeSauceLabsBikeLightButton: Locator;
+  readonly removeSaucelabsFleeceJacketButton: Locator;
+  readonly removeAllTheThingsTshirtRedButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.cartLink = page.locator(".shopping_cart_link");
-    this.addToCartBackpackButton = page.locator(
+
+    // add item
+    this.addToCartSauceBackpackButton = page.locator(
       '[data-test="add-to-cart-sauce-labs-backpack"]'
     );
-    this.addToCartBoltTshirtButton = page.locator(
+    this.addToCartSaucelabsBoltTshirtButton = page.locator(
       '[data-test="add-to-cart-sauce-labs-bolt-t-shirt"]'
     );
-    this.addToCartBikeLightButton = page.locator(
+    this.addToCartSauceLabsOnesieButton = page.locator(
+      '[data-test="add-to-cart-sauce-labs-onesie"]'
+    );
+    this.addToCartSauceLabsBikeLightButton = page.locator(
       '[data-test="add-to-cart-sauce-labs-bike-light"]'
+    );
+    this.addToCartSauceLabsFleeceJacketButton = page.locator(
+      'data-test="add-to-cart-sauce-labs-fleece-jacket"'
+    );
+    this.addToCartAllTheThingsShirtRedButton = page.locator(
+      '[data-test="add-to-cart-test.allthethings()-t-shirt-(red)"]'
+    );
+
+    // remove item
+    this.removeSauceLabsBackpackButton = page.locator(
+      '[data-test="remove-sauce-labs-backpack"]'
+    );
+    this.removeSauceLabsBoltTshirtButton = page.locator(
+      '[data-test="remove-sauce-labs-bolt-t-shirt"]'
+    );
+    this.removeSauceLabsOnesieButton = page.locator(
+      '[data-test="remove-sauce-labs-onesie"]'
+    );
+    this.removeSauceLabsBikeLightButton = page.locator(
+      '[data-test="remove-sauce-labs-bike-light"]'
+    );
+    this.removeSaucelabsFleeceJacketButton = page.locator(
+      '[data-test="remove-sauce-labs-fleece-jacket"]'
+    );
+    this.removeAllTheThingsTshirtRedButton = page.locator(
+      '[data-test="remove-test.allthethings()-t-shirt-(red)"]'
     );
   }
 

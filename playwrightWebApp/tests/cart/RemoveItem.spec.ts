@@ -1,17 +1,19 @@
 import { test, expect } from "@playwright/test";
+import { LoginPage } from "../../pages/auth/LoginPage";
 
 test.describe("Shopping Cart Tests", () => {
+  let loginPage: LoginPage;
+
   test.beforeEach(async ({ page }) => {
-    await page.goto("https://www.saucedemo.com/");
+    loginPage = new LoginPage(page);
+    await loginPage.navigate();
   });
 
   test("User can add 1 item to the cart and remove 1 item from the cart", async ({
     page,
   }) => {
     // login
-    await page.locator('[data-test="username"]').fill("visual_user");
-    await page.locator('[data-test="password"]').fill("secret_sauce");
-    await page.locator('[data-test="login-button"]').click();
+    await loginPage.login("standard_user", "secret_sauce");
 
     // add a single item and next to your cart remove item
     await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
@@ -49,9 +51,7 @@ test.describe("Shopping Cart Tests", () => {
 
   test("User can add multiple items to the cart", async ({ page }) => {
     // login
-    await page.locator('[data-test="username"]').fill("standard_user");
-    await page.locator('[data-test="password"]').fill("secret_sauce");
-    await page.locator('[data-test="login-button"]').click();
+    await loginPage.login("standard_user", "secret_sauce");
 
     // add multiple items
     await page
@@ -115,9 +115,7 @@ test.describe("Shopping Cart Tests", () => {
 
   test("User can remove all items from the cart", async ({ page }) => {
     // login
-    await page.locator('[data-test="username"]').fill("standard_user");
-    await page.locator('[data-test="password"]').fill("secret_sauce");
-    await page.locator('[data-test="login-button"]').click();
+    await loginPage.login("standard_user", "secret_sauce");
 
     // cleanup webpage
     await page.getByRole("button", { name: "Open Menu" }).click();

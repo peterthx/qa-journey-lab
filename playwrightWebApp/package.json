@@ -2,7 +2,8 @@
   "name": "playwright-web",
   "version": "1.0.0",
   "scripts": {
-    "test": "playwright test"
+    "test": "playwright test",
+    "test:headed":"npx playwright test --headed"
   },
   "devDependencies": {
     "@playwright/test": "1.57.0"

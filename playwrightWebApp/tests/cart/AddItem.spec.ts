@@ -28,7 +28,7 @@ test.describe("Shopping Cart – Add Item Tests", () => {
     cartPage = new CartPage(page);
     checkoutPage = new CheckoutPage(page);
 
-    await inventoryPage.addToCartBackpackButton.click();
+    await inventoryPage.addToCartSauceBackpackButton.click();
     await expect(inventoryPage.cartLink).toContainText("1");
     await inventoryPage.cartLink.click();
     await cartPage.goToCheckout();
@@ -47,9 +47,9 @@ test.describe("Shopping Cart – Add Item Tests", () => {
     cartPage = new CartPage(page);
     checkoutPage = new CheckoutPage(page);
 
-    await inventoryPage.addToCartBackpackButton.click();
-    await inventoryPage.addToCartBoltTshirtButton.click();
-    await inventoryPage.addToCartBikeLightButton.click();
+    await inventoryPage.addToCartSauceBackpackButton.click();
+    await inventoryPage.addToCartSaucelabsBoltTshirtButton.click();
+    await inventoryPage.addToCartSauceLabsBikeLightButton.click();
     await expect(inventoryPage.cartLink).toContainText("3");
     await inventoryPage.cartLink.click();
     await cartPage.goToCheckout();
