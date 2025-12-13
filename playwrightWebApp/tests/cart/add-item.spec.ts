@@ -1,174 +1,94 @@
 import { test, expect } from "@playwright/test";
+import { LoginPage } from "../../pages/auth/LoginPage";
+import { InventoryPage } from "../../pages/inventory/InventoryPage";
+import { CartPage } from "../../pages/cart/CartPage";
+import { CheckoutPage } from "../../pages/cart/CheckoutPage";
 
 test.describe("Shopping Cart – Add Item Tests", () => {
+  let loginPage: LoginPage;
+  let inventoryPage: InventoryPage;
+  let cartPage: CartPage;
+  let checkoutPage: CheckoutPage;
+
   test.beforeEach(async ({ page }) => {
-    await page.goto("https://www.saucedemo.com/");
+    loginPage = new LoginPage(page);
+    inventoryPage = new InventoryPage(page);
+    await loginPage.navigate();
+    await loginPage.login("standard_user", "secret_sauce");
+  });
+
+  test.afterEach(async ({ page }) => {
+    await page.getByRole("button", { name: "Open Menu" }).click();
+    const logout = page.locator('[data-test="logout-sidebar-link"]');
+    await expect(logout).toBeVisible();
+    await logout.click();
   });
 
   test("User can add 1 item to the cart", async ({ page }) => {
-    // Login
-    await page.locator('[data-test="username"]').fill("standard_user");
-    await page.locator('[data-test="password"]').fill("secret_sauce");
-    await page.locator('[data-test="login-button"]').click();
+    cartPage = new CartPage(page);
+    checkoutPage = new CheckoutPage(page);
 
-    // add item
-    await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
-    await expect(
-      page.locator('[data-test="shopping-cart-link"]')
-    ).toContainText("1");
-    await page.locator('[data-test="shopping-cart-link"]').click();
-    await page.locator('[data-test="checkout"]').click();
+    await inventoryPage.addToCartBackpackButton.click();
+    await expect(inventoryPage.cartLink).toContainText("1");
+    await inventoryPage.cartLink.click();
+    await cartPage.goToCheckout();
 
-    // Input Address
-    await page.locator('[data-test="firstName"]').fill("John");
-    await page.locator('[data-test="lastName"]').fill("Smith");
-    await page
-      .locator('[data-test="postalCode"]')
-      .fill("1989 San Francisco US");
-    await page.locator('[data-test="continue"]').click();
+    await checkoutPage.inputAddress("John", "Smith", "1989 San Francisco US");
 
-    // Use partial text matching if exact format might vary
-    await expect(page.locator('[data-test="subtotal-label"]')).toContainText(
-      "$29.99"
-    );
-    await expect(page.locator('[data-test="tax-label"]')).toContainText(
-      "$2.40"
-    );
-    await expect(page.locator('[data-test="total-label"]')).toContainText(
-      "$32.39"
-    );
+    await expect(checkoutPage.subtotalLabel).toContainText("$29.99");
+    await expect(checkoutPage.taxLabel).toContainText("$2.40");
+    await expect(checkoutPage.totalLabel).toContainText("$32.39");
 
-    // click finish
-    await page.locator('[data-test="finish"]').click();
-
-    // back to homepage
-    await page.locator('[data-test="back-to-products"]').click();
-
-    // logout
-    await page.getByRole("button", { name: "Open Menu" }).click();
-    const logout = page.locator('[data-test="logout-sidebar-link"]');
-
-    // wait until ready
-    await expect(logout).toBeVisible();
-    await page.locator('[data-test="logout-sidebar-link"]').click();
+    await checkoutPage.finishCheckout();
+    await checkoutPage.backToProducts();
   });
 
   test("User can add multiple items to the cart", async ({ page }) => {
-    // Login
-    await page.locator('[data-test="username"]').fill("standard_user");
-    await page.locator('[data-test="password"]').fill("secret_sauce");
-    await page.locator('[data-test="login-button"]').click();
+    cartPage = new CartPage(page);
+    checkoutPage = new CheckoutPage(page);
 
-    // add mutiple item
-    await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
-    await page
-      .locator('[data-test="add-to-cart-sauce-labs-bolt-t-shirt"]')
-      .click();
-    await page
-      .locator('[data-test="add-to-cart-sauce-labs-bike-light"]')
-      .click();
-    await expect(
-      page.locator('[data-test="shopping-cart-link"]')
-    ).toContainText("3");
-    await page.locator('[data-test="shopping-cart-link"]').click();
-    await page.locator('[data-test="checkout"]').click();
+    await inventoryPage.addToCartBackpackButton.click();
+    await inventoryPage.addToCartBoltTshirtButton.click();
+    await inventoryPage.addToCartBikeLightButton.click();
+    await expect(inventoryPage.cartLink).toContainText("3");
+    await inventoryPage.cartLink.click();
+    await cartPage.goToCheckout();
 
-    // Input Address
-    await page.locator('[data-test="firstName"]').fill("Lily");
-    await page.locator('[data-test="lastName"]').fill("Park");
-    await page
-      .locator('[data-test="postalCode"]')
-      .fill("77 Castro St, Mountain View, CA");
-    await page.locator('[data-test="continue"]').click();
-
-    // Use partial text matching if exact format might vary
-    await expect(page.locator('[data-test="subtotal-label"]')).toContainText(
-      "$55.97"
-    );
-    await expect(page.locator('[data-test="tax-label"]')).toContainText(
-      "$4.48"
-    );
-    await expect(page.locator('[data-test="total-label"]')).toContainText(
-      "$60.45"
+    await checkoutPage.inputAddress(
+      "Lily",
+      "Park",
+      "77 Castro St, Mountain View, CA"
     );
 
-    // click finish
-    await page.locator('[data-test="finish"]').click();
+    await expect(checkoutPage.subtotalLabel).toContainText("$55.97");
+    await expect(checkoutPage.taxLabel).toContainText("$4.48");
+    await expect(checkoutPage.totalLabel).toContainText("$60.45");
 
-    // back to homepage
-    await page.locator('[data-test="back-to-products"]').click();
-
-    // logout
-    await page.getByRole("button", { name: "Open Menu" }).click();
-    const logout = page.locator('[data-test="logout-sidebar-link"]');
-
-    // wait until ready
-    await expect(logout).toBeVisible();
-    await page.locator('[data-test="logout-sidebar-link"]').click();
+    await checkoutPage.finishCheckout();
+    await checkoutPage.backToProducts();
   });
 
   test("User can add all items to the cart", async ({ page }) => {
-    // Login
-    await page.locator('[data-test="username"]').fill("standard_user");
-    await page.locator('[data-test="password"]').fill("secret_sauce");
-    await page.locator('[data-test="login-button"]').click();
+    cartPage = new CartPage(page);
+    checkoutPage = new CheckoutPage(page);
 
-    // Add all item (left side)
-    await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
-    await page
-      .locator('[data-test="add-to-cart-sauce-labs-bolt-t-shirt"]')
-      .click();
-    await page.locator('[data-test="add-to-cart-sauce-labs-onesie"]').click();
+    await inventoryPage.addAllItemsToCart();
 
-    // Add all item (right side)
-    await page
-      .locator('[data-test="add-to-cart-sauce-labs-bike-light"]')
-      .click();
-    await page
-      .locator('[data-test="add-to-cart-sauce-labs-fleece-jacket"]')
-      .click();
-    await page
-      .locator('[data-test="add-to-cart-test.allthethings()-t-shirt-(red)"]')
-      .click();
+    await expect(inventoryPage.cartLink).toContainText("6");
+    await inventoryPage.cartLink.click();
+    await cartPage.goToCheckout();
 
-    // Checkout
-    await expect(
-      page.locator('[data-test="shopping-cart-link"]')
-    ).toContainText("6");
-    await page.locator('[data-test="shopping-cart-link"]').click();
-    await page.locator('[data-test="checkout"]').click();
-
-    // Input Address
-    await page.locator('[data-test="firstName"]').fill("Noah");
-    await page.locator('[data-test="lastName"]').fill("Foster");
-    await page
-      .locator('[data-test="postalCode"]')
-      .fill("210 University Ave, Palo Alto, CA");
-    await page.locator('[data-test="continue"]').click();
-
-    // Use partial text matching if exact format might vary
-    await expect(page.locator('[data-test="subtotal-label"]')).toContainText(
-      "$129.94"
-    );
-    await expect(page.locator('[data-test="tax-label"]')).toContainText(
-      "$10.40"
-    );
-    await expect(page.locator('[data-test="total-label"]')).toContainText(
-      "$140.34"
+    await checkoutPage.inputAddress(
+      "Noah",
+      "Foster",
+      "210 University Ave, Palo Alto, CA"
     );
 
-    // Click finish
-    await page.locator('[data-test="finish"]').click();
+    await expect(checkoutPage.subtotalLabel).toContainText("$129.94");
+    await expect(checkoutPage.taxLabel).toContainText("$10.40");
+    await expect(checkoutPage.totalLabel).toContainText("$140.34");
 
-    // Back to homepage
-    await page.locator('[data-test="back-to-products"]').click();
-
-    // Logout
-    await page.getByRole("button", { name: "Open Menu" }).click();
-    const logout = page.locator('[data-test="logout-sidebar-link"]');
-
-    // Wait until ready
-    await expect(logout).toBeVisible();
-    await page.locator('[data-test="logout-sidebar-link"]').click();
+    await checkoutPage.finishCheckout();
+    await checkoutPage.backToProducts();
   });
 });
