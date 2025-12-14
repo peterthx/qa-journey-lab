@@ -1,6 +1,6 @@
 import http from "k6/http";
 import { check, sleep, group } from "k6";
-import { BASE_URL, SERVICE } from "../../.env";
+import { BASE_URL, SERVICE } from "../../.env/settings.js";
 import {
   randomAddress,
   randomOrderID,
