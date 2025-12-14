@@ -1,7 +1,7 @@
 import http from "k6/http";
 import { check, group, sleep } from "k6";
 import exec from "k6/execution";
-import { BASE_URL, SERVICE } from "../../.env/settings.js";
+import { BASE_URL, SERVICE } from "../../.env";
 import {
   randomSupplierName,
   randomContactName,

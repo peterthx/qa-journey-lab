@@ -1,6 +1,6 @@
 import http from "k6/http";
 import { check, sleep } from "k6";
-import { BASE_URL, SERVICE } from "../../.env/settings.js";
+import { BASE_URL, SERVICE } from "../../.env";
 
 export const options = {
   scenarios: {
