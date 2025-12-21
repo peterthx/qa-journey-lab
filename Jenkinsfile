@@ -20,25 +20,22 @@ pipeline {
                 echo 'Installing Playwright WebApp Dependencies...'
                 dir('playwrightWebApp') {
                     sh 'npm install'
-                    sh 'npx playwright install' 
+                    sh 'npx playwright install'
                 }
             }
         }
         stage('Run Playwright All Tests') {
-            matrix {
-
-                stages {
-                    stage('Run Playwright API Tests') {
-                        steps {
-                            echo "Running Playwright API Tests..."
-                            sh './setup-playwright-api.sh'
-                        }
+            stages {
+                stage('Run Playwright API Tests') {
+                    steps {
+                        echo "Running Playwright API Tests..."
+                        sh './setup-playwright-api.sh'
                     }
-                    stage('Run Playwright WebApp Tests') {
-                        steps {
-                            echo "Running Playwright WebApp Tests..."
-                            sh './setup-playwright-webapp.sh'
-                        }
+                }
+                stage('Run Playwright WebApp Tests') {
+                    steps {
+                        echo "Running Playwright WebApp Tests..."
+                        sh './setup-playwright-webapp.sh'
                     }
                 }
             }
