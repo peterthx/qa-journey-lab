@@ -10,6 +10,21 @@ pipeline {
                 sh './setup-robot.sh'
             }
         }
+        stage('Playwright Dependencies Installation') {
+            steps {
+                echo 'Installing Playwright API Dependencies...'
+                dir('playwrightAPI') {
+                    sh 'npm install'
+                    sh 'npx playwright install'
+                }
+                echo 'Installing Playwright WebApp Dependencies...'
+                dir('playwrightWebApp') {
+                    sh 'npm install'
+                    sh 'npx playwright install'
+                    sh 'npm install @playwright/test'                                              ║ 
+                }
+            }
+        }
         stage('Run Playwright All Tests') {
             matrix {
                 axes {
