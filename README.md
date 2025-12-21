@@ -5,6 +5,7 @@ This repository is a collection of example automated tests and supporting utilit
 -   **Browser E2E tests** using Playwright (`playwrightWebApp/`)
 -   **API tests** using Playwright (`playwrightAPI/`)
 -   **API performance and smoke tests** using k6 (`k6LoadTest/`)
+-   **API tests** using Robot Framework (`robotTestsAPIs/`)
 
 The goal of this repository is to provide small, focused examples that show how to write, run, and report on tests across different tools. Use the included tests as learning material, templates, or a starting point for your own automation.
 
@@ -40,23 +41,41 @@ The goal of this repository is to provide small, focused examples that show how 
     npm install
     ```
 
+3.  Set up the environment for `k6LoadTest`:
+
+    ```bash
+    cd k6LoadTest
+    cp .env.example .env
+    cd ..
+    ```
+
 ## Running Tests
 
 Before committing your changes, it is recommended to run the following tests to ensure code quality and prevent regressions.
 
-### Playwright (Browser E2E)
+### Run All Tests
+
+You can run all tests with a single command:
+
+```bash
+./run
+```
+
+### Run Individual Tests
+
+#### Playwright (Browser E2E)
 
 ```bash
 npm run test:webapp
 ```
 
-### Playwright (API)
+#### Playwright (API)
 
 ```bash
 npm run test:api
 ```
 
-### k6 (API Smoke Test)
+#### k6 (API Smoke Test)
 
 For detailed instructions on all k6 tests, see the [`k6LoadTest/README.md`](./k6LoadTest/README.md).
 
@@ -65,20 +84,25 @@ cd k6LoadTest
 k6 run tests/smoke/smoke-test.js
 ```
 
-### k6 (API Load Test)
+#### k6 (API Load Test)
 
 ```bash
 cd k6LoadTest
 k6 run --vus 10 --duration 30s tests/load/wh-load-orders.js
 ```
 
-### Robot Framework (API)
+#### Robot Framework (API)
 
 For detailed instructions on Robot Framework tests, see the [`robotTestsAPIs/README.md`](./robotTestsAPIs/README.md).
 
 ```bash
-cd robotTestsAPIs
-robot tests/sample.robot
+./run-api-robot.sh
 ```
 
-**Last updated:** December 21, 2025
+## Contributing
+
+Contributions are welcome! Please feel free to submit a pull request or open an issue.
+
+## License
+
+This project is licensed under the MIT License.
