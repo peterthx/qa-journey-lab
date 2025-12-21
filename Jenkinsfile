@@ -20,8 +20,7 @@ pipeline {
                 echo 'Installing Playwright WebApp Dependencies...'
                 dir('playwrightWebApp') {
                     sh 'npm install'
-                    sh 'npx playwright install'
-                    sh 'npm install @playwright/test'                                              ║ 
+                    sh 'npx playwright install' 
                 }
             }
         }
