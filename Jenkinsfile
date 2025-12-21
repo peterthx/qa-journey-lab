@@ -26,22 +26,17 @@ pipeline {
         }
         stage('Run Playwright All Tests') {
             matrix {
-                axes {
-                    axis {
-                        name 'BROWSER'
-                        values 'chromium', 'firefox', 'webkit'
-                    }
-                }
+
                 stages {
                     stage('Run Playwright API Tests') {
                         steps {
-                            echo "Running Playwright API Tests on ${BROWSER}..."
+                            echo "Running Playwright API Tests..."
                             sh './setup-playwright-api.sh'
                         }
                     }
                     stage('Run Playwright WebApp Tests') {
                         steps {
-                            echo "Running Playwright WebApp Tests on ${BROWSER}..."
+                            echo "Running Playwright WebApp Tests..."
                             sh './setup-playwright-webapp.sh'
                         }
                     }
