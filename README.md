@@ -15,6 +15,7 @@ The goal of this repository is to provide small, focused examples that show how 
 | [`k6LoadTest/`](./k6LoadTest)         | Performance tests for an API, including smoke and load testing scenarios.                                  |
 | [`playwrightAPI/`](./playwrightAPI)   | API tests, demonstrating how to make requests and validate responses using Playwright.                   |
 | [`playwrightWebApp/`](./playwrightWebApp) | E2E tests for a web application, demonstrating basic user interactions and assertions with Playwright. |
+| [`robotTestsAPIs/`](./robotTestsAPIs) | API tests using Robot Framework for comprehensive testing scenarios. |
 
 ## Getting Started
 
@@ -22,6 +23,7 @@ The goal of this repository is to provide small, focused examples that show how 
 
 -   [Node.js](https://nodejs.org/) (v20+)
 -   [k6](https://k6.io/docs/getting-started/installation/)
+-   [Robot Framework](https://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#installing-robot-framework)
 
 ### Installation
 
@@ -70,4 +72,13 @@ cd k6LoadTest
 k6 run --vus 10 --duration 30s tests/load/wh-load-orders.js
 ```
 
-**Last updated:** December 7, 2025
+### Robot Framework (API)
+
+For detailed instructions on Robot Framework tests, see the [`robotTestsAPIs/README.md`](./robotTestsAPIs/README.md).
+
+```bash
+cd robotTestsAPIs
+robot tests/sample.robot
+```
+
+**Last updated:** December 21, 2025
