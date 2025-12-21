@@ -7,4 +7,4 @@ npm install
 
 npx playwright install
 
-npx playwright test --browser ${BROWSER}
+npx playwright test
