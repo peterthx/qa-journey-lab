@@ -1,7 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const browser = process.env.BROWSER || 'chromium';
-
 export default defineConfig({
   use: {
     baseURL: 'http://srv946485.hstgr.cloud:8080',
