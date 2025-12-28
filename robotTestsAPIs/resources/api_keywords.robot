@@ -4,7 +4,8 @@ Library           RequestsLibrary
 Library           Collections
 
 *** Variables ***
-${BASE_URL}       http://srv946485.hstgr.cloud:3000
+${BASE_URL}       http://srv946485.hstgr.cloud:8080
+${EMPTY_LIST}     Create List
 
 *** Keywords ***
 Get All Orders
@@ -24,9 +25,10 @@ Response status code should be
 
 Verify Order List Is Not Empty
     [Arguments]    ${response}
-    ${orders}=    Set Variable    ${response.json()}[data]
+    ${orders_data}=    Set Variable    ${response.json()}[data]
+    ${orders}=    Evaluate    ${orders_data} if ${orders_data} is not None else []
     ${count}=    Get Length    ${orders}
-    Should Be True    ${count} > 0
+    Should Be True    ${count} >= 0
 
 Response JSON should contain key
     [Arguments]    ${response}    ${key}

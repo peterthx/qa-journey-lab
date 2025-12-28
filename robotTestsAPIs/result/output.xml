@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4 (Python 3.9.6 on darwin)" generated="2025-12-28T19:50:15.890514" rpa="false" schemaversion="5">
+<suite id="s1" name="Tests" source="/Users/theerapatngoipoothon/Desktop/Labs/github/qa-journey-lab/robotTestsAPIs/tests">
+<suite id="s1-s1" name="Orders" source="/Users/theerapatngoipoothon/Desktop/Labs/github/qa-journey-lab/robotTestsAPIs/tests/orders.robot">
+<test id="s1-s1-t1" name="Orders GET Request" line="9">
+<kw name="Get All Orders" owner="api_keywords">
+<kw name="GET" owner="RequestsLibrary">
+<msg time="2025-12-28T19:50:16.029487" level="INFO">GET Request : url=http://srv946485.hstgr.cloud:8080/api/orders 
+ path_url=/api/orders 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-12-28T19:50:16.029556" level="INFO">GET Response : url=http://srv946485.hstgr.cloud:8080/api/orders 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Date': 'Sun, 28 Dec 2025 12:50:16 GMT', 'Content-Length': '29'} 
+ body={"data":null,"success":true}
+ 
+ </msg>
+<msg time="2025-12-28T19:50:16.029640" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${BASE_URL}/api/orders</arg>
+<doc>Sends a GET request.</doc>
+<status status="PASS" start="2025-12-28T19:50:15.935850" elapsed="0.093806"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-28T19:50:16.030127" level="INFO">{'data': None, 'success': True}</msg>
+<arg>${response.json()}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-28T19:50:16.029767" elapsed="0.000386"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-12-28T19:50:16.030183" elapsed="0.000025"/>
+</return>
+<msg time="2025-12-28T19:50:16.030287" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<status status="PASS" start="2025-12-28T19:50:15.935587" elapsed="0.094712"/>
+</kw>
+<kw name="Response status code should be" owner="api_keywords">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-12-28T19:50:16.030857" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-12-28T19:50:16.030583" elapsed="0.000306"/>
+</kw>
+<arg>${response}</arg>
+<arg>200</arg>
+<status status="PASS" start="2025-12-28T19:50:16.030422" elapsed="0.000500"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-12-28T19:50:16.031295" level="INFO">Argument types are:
+&lt;class 'bool'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.json()}[success]</arg>
+<arg>True</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-12-28T19:50:16.030990" elapsed="0.000334"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-28T19:50:16.031628" level="INFO">{'data': None, 'success': True}</msg>
+<arg>${response.json()}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-28T19:50:16.031393" elapsed="0.000257"/>
+</kw>
+<kw name="Verify Order List Is Not Empty" owner="api_keywords">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-12-28T19:50:16.032133" level="INFO">${orders_data} = None</msg>
+<var>${orders_data}</var>
+<arg>${response.json()}[data]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-12-28T19:50:16.031877" elapsed="0.000269"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-12-28T19:50:16.032394" level="INFO">${orders} = []</msg>
+<var>${orders}</var>
+<arg>${orders_data} if ${orders_data} is not None else []</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-12-28T19:50:16.032197" elapsed="0.000210"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2025-12-28T19:50:16.032644" level="INFO">Length is 0.</msg>
+<msg time="2025-12-28T19:50:16.032681" level="INFO">${count} = 0</msg>
+<var>${count}</var>
+<arg>${orders}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2025-12-28T19:50:16.032460" elapsed="0.000233"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${count} &gt;= 0</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2025-12-28T19:50:16.032743" elapsed="0.000166"/>
+</kw>
+<arg>${response}</arg>
+<status status="PASS" start="2025-12-28T19:50:16.031742" elapsed="0.001197"/>
+</kw>
+<kw name="Response JSON should contain key" owner="api_keywords">
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<arg>${response.json()}</arg>
+<arg>${key}</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2025-12-28T19:50:16.033164" elapsed="0.000218"/>
+</kw>
+<arg>${response}</arg>
+<arg>data</arg>
+<status status="PASS" start="2025-12-28T19:50:16.033026" elapsed="0.000385"/>
+</kw>
+<tag>smoke</tag>
+<status status="PASS" start="2025-12-28T19:50:15.935258" elapsed="0.098237"/>
+</test>
+<test id="s1-s1-t2" name="Order GET Request By ID" line="18">
+<kw name="Get All Orders" owner="api_keywords">
+<kw name="GET" owner="RequestsLibrary">
+<msg time="2025-12-28T19:50:16.127997" level="INFO">GET Request : url=http://srv946485.hstgr.cloud:8080/api/orders 
+ path_url=/api/orders 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-12-28T19:50:16.128074" level="INFO">GET Response : url=http://srv946485.hstgr.cloud:8080/api/orders 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Date': 'Sun, 28 Dec 2025 12:50:16 GMT', 'Content-Length': '29'} 
+ body={"data":null,"success":true}
+ 
+ </msg>
+<msg time="2025-12-28T19:50:16.128194" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${BASE_URL}/api/orders</arg>
+<doc>Sends a GET request.</doc>
+<status status="PASS" start="2025-12-28T19:50:16.033892" elapsed="0.094327"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-12-28T19:50:16.128929" level="INFO">{'data': None, 'success': True}</msg>
+<arg>${response.json()}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-12-28T19:50:16.128363" elapsed="0.000610"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-12-28T19:50:16.129018" elapsed="0.000032"/>
+</return>
+<msg time="2025-12-28T19:50:16.129173" level="INFO">${all_orders_response} = &lt;Response [200]&gt;</msg>
+<var>${all_orders_response}</var>
+<status status="PASS" start="2025-12-28T19:50:16.033784" elapsed="0.095410"/>
+</kw>
+<kw name="Response status code should be" owner="api_keywords">
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-12-28T19:50:16.130275" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>${status_code}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-12-28T19:50:16.129793" elapsed="0.000533"/>
+</kw>
+<arg>${all_orders_response}</arg>
+<arg>200</arg>
+<status status="PASS" start="2025-12-28T19:50:16.129390" elapsed="0.000985"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-12-28T19:50:16.130929" level="INFO">${orders_data} = None</msg>
+<var>${orders_data}</var>
+<arg>${all_orders_response.json()}[data]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-12-28T19:50:16.130486" elapsed="0.000465"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Log To Console" owner="BuiltIn">
+<arg>No orders found, skipping 'Order GET Request By ID' verification.</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-12-28T19:50:16.131576" elapsed="0.000186"/>
+</kw>
+<arg>${orders_data} is not ${None} and ${orders_data} != []</arg>
+<arg>Run Keywords</arg>
+<arg>${first_order}=</arg>
+<arg>Set Variable</arg>
+<arg>${orders_data}[0]</arg>
+<arg>AND</arg>
+<arg>${order_id}=</arg>
+<arg>Set Variable</arg>
+<arg>${first_order}[order_id]</arg>
+<arg>AND</arg>
+<arg>${single_order_response}=</arg>
+<arg>Get Order By ID</arg>
+<arg>${order_id}</arg>
+<arg>AND</arg>
+<arg>Response status code should be</arg>
+<arg>${single_order_response}</arg>
+<arg>200</arg>
+<arg>AND</arg>
+<arg>Should Be Equal As Strings</arg>
+<arg>${single_order_response.json()}[success]</arg>
+<arg>True</arg>
+<arg>AND</arg>
+<arg>Should Be Equal As Strings</arg>
+<arg>${single_order_response.json()}[data][order][order_id]</arg>
+<arg>${order_id}</arg>
+<arg>ELSE</arg>
+<arg>Log To Console</arg>
+<arg>No orders found, skipping 'Order GET Request By ID' verification.</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2025-12-28T19:50:16.131066" elapsed="0.000811"/>
+</kw>
+<tag>smoke</tag>
+<status status="PASS" start="2025-12-28T19:50:16.033600" elapsed="0.098452"/>
+</test>
+<doc>A sample test suite for API testing.
+This test suite assumes you have a library like
+robotframework-requests installed.</doc>
+<status status="PASS" start="2025-12-28T19:50:15.902468" elapsed="0.229891"/>
+</suite>
+<status status="PASS" start="2025-12-28T19:50:15.891206" elapsed="0.241607"/>
+</suite>
+<statistics>
+<total>
+<stat pass="2" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="2" fail="0" skip="0">smoke</stat>
+</tag>
+<suite>
+<stat name="Tests" id="s1" pass="2" fail="0" skip="0">Tests</stat>
+<stat name="Orders" id="s1-s1" pass="2" fail="0" skip="0">Tests.Orders</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
