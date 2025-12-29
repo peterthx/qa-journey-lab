@@ -13,8 +13,8 @@ export const options = {
 };
 
 export default function () {
-  const res = http.get(`${BASE_URL.ENDPOINT}${SERVICE.GET_ALL_PRODUCTS}`);
-
+  const url = `${BASE_URL.ENDPOINT}${SERVICE.GET_ALL_PRODUCTS}`;
+  const res = http.get(url);
   check(res, {
     status: (res) => res.status === 200,
     "content-type": (res) =>
