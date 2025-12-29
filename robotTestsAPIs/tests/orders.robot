@@ -20,12 +20,16 @@ Order GET Request By ID
     ${all_orders_response}=    Get All Orders
     Response status code should be    ${all_orders_response}    200
     ${orders_data}=    Set Variable    ${all_orders_response.json()}[data]
-    Run Keyword If    ${orders_data} is not ${None} and ${orders_data} != []    Run Keywords
-    ...    ${first_order}=    Set Variable    ${orders_data}[0]
-    ...    AND    ${order_id}=    Set Variable    ${first_order}[order_id]
-    ...    AND    ${single_order_response}=    Get Order By ID    ${order_id}
-    ...    AND    Response status code should be    ${single_order_response}    200
-    ...    AND    Should Be Equal As Strings    ${single_order_response.json()}[success]    True
-    ...    AND    Should Be Equal As Strings    ${single_order_response.json()}[data][order][order_id]    ${order_id}
-    ...    ELSE    Log To Console    No orders found, skipping 'Order GET Request By ID' verification.
+
+    Run Keyword If    ${orders_data} is ${None} or ${orders_data} == []
+    ...    Log To Console    No orders found, skipping 'Order GET Request By ID' verification.
+    ...    AND    Skip    No orders available for ID lookup
+
+    ${first_order}=    Set Variable    ${orders_data}[0]
+    ${order_id}=       Set Variable    ${first_order}[order_id]
+
+    ${single_order_response}=    Get Order By ID    ${order_id}
+    Response status code should be    ${single_order_response}    200
+    Should Be Equal As Strings    ${single_order_response.json()}[success]    True
+    Should Be Equal As Strings    ${single_order_response.json()}[data][order][order_id]    ${order_id}
     

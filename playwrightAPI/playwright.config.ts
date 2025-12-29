@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   use: {
-    baseURL: 'http://srv946485.hstgr.cloud:8080',
+    baseURL: 'http://srv946485.hstgr.cloud:3000',
   },
   testDir: 'tests',
   timeout: 30000,

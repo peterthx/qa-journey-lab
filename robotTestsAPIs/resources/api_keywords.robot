@@ -4,7 +4,7 @@ Library           RequestsLibrary
 Library           Collections
 
 *** Variables ***
-${BASE_URL}       http://srv946485.hstgr.cloud:8080
+${BASE_URL}       http://srv946485.hstgr.cloud:3000
 ${EMPTY_LIST}     Create List
 
 *** Keywords ***
