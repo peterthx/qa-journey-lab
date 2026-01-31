@@ -7,7 +7,7 @@ Library           RequestsLibrary
 
 *** Test Cases ***
 Orders GET Request
-    [Tags]    smoke
+    [Tags]    regression
     ${response}=    Get All Orders
     Response status code should be    ${response}    200
     Should Be Equal As Strings    ${response.json()}[success]    True
@@ -16,7 +16,7 @@ Orders GET Request
     Response JSON should contain key    ${response}    data
 
 Order GET Request By ID
-    [Tags]    smoke
+    [Tags]    regression
     ${all_orders_response}=    Get All Orders
     Response status code should be    ${all_orders_response}    200
     ${orders_data}=    Set Variable    ${all_orders_response.json()}[data]
