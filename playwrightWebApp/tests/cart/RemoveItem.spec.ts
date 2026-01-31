@@ -26,6 +26,7 @@ test.describe("Remove Item from Cart Tests", () => {
   });
 
   test("should remove a single item from the cart", async () => {
+
     // Add a single item and verify it's in the cart
     await inventoryPage.addToCartSauceBackpackButton.click();
     await expect(inventoryPage.cartLink).toContainText("1");
@@ -39,6 +40,7 @@ test.describe("Remove Item from Cart Tests", () => {
   });
 
   test("should remove one of multiple items from the cart", async ({ page }) => {
+
     // Add multiple items
     await inventoryPage.addToCartSaucelabsBoltTshirtButton.click();
     await inventoryPage.addToCartSauceLabsBikeLightButton.click();
@@ -52,6 +54,7 @@ test.describe("Remove Item from Cart Tests", () => {
   });
 
   test("should remove all items from the cart", async ({ page }) => {
+
     // Add all items to the cart
     await inventoryPage.addAllItemsToCart();
     await expect(inventoryPage.cartLink).toContainText("6");
@@ -59,7 +62,6 @@ test.describe("Remove Item from Cart Tests", () => {
     // Go to the cart and remove all items
     await inventoryPage.cartShopLink.click();
     await cartPage.continueShoppingButton.click();
-
     await inventoryPage.removeAllTheThingsTshirtRedButton.click();
     await inventoryPage.removeSauceLabsFleeceJacketButton.click();
     await inventoryPage.removeSauceLabsBikeLightButton.click();

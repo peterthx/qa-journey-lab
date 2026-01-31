@@ -9,7 +9,7 @@ test.describe("Login Form Tests", () => {
     await loginPage.navigate();
   });
   test("Login and Logout normal user #1", async ({ page }) => {
-    // Login
+    // login
     await loginPage.login("standard_user", "secret_sauce");
 
     // login success
@@ -24,7 +24,7 @@ test.describe("Login Form Tests", () => {
   });
 
   test("Login and Logout problem user #2", async ({ page }) => {
-    // Login
+    // login
     await loginPage.login("problem_user", "secret_sauce");
 
     // login success
@@ -39,7 +39,7 @@ test.describe("Login Form Tests", () => {
   });
 
   test("Login and Logout visual user #3", async ({ page }) => {
-    // Login
+    // login
     await loginPage.login("visual_user", "secret_sauce");
 
     // login success
