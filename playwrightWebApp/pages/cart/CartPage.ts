@@ -1,17 +1,18 @@
-import { Page, Locator } from "@playwright/test";
+import { Page } from "@playwright/test";
 
 export class CartPage {
-    readonly page: Page;
-    readonly checkoutButton: Locator;
-    readonly continueShoppingButton: Locator;
+  constructor(private page: Page) {
+    this.page = page;
+  }
 
-    constructor(page: Page) {
-        this.page = page;
-        this.checkoutButton = page.locator('[data-test="checkout"]');
-        this.continueShoppingButton = page.locator('[data-test="continue-shopping"]')
-    }
+  get btnCheckout() {
+    return this.page.locator('[data-test="checkout"]');
+  }
+  get btnContinueShopping() {
+    return this.page.locator('[data-test="continue-shopping"]');
+  }
 
-    async goToCheckout() {
-        await this.checkoutButton.click();
-    }
+  async goToCheckout() {
+    await this.btnCheckout.click();
+  }
 }

@@ -1,53 +1,45 @@
-import { test, expect } from "@playwright/test";
-import { LoginPage } from "../../pages/auth/LoginPage";
+import { test, expect } from "../../fixtures/BasePages";
 
-test.describe("Login Form Tests", () => {
-  let loginPage: LoginPage;
+test.describe("TS001 - Login Form Tests", () => {
 
-  test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
+  test.beforeEach(async ({ loginPage }) => {
     await loginPage.navigate();
   });
-  test("Login and Logout normal user #1", async ({ page }) => {
+  test("TS001_TC001 - Login and Logout normal user #1", async ({ page,loginPage, logoutPage, standardUser }) => {
     // login
-    await loginPage.login("standard_user", "secret_sauce");
+    await loginPage.login(standardUser.username, standardUser.password);
+
+    // login success
+    await expect(page).toHaveURL(/inventory.html/);
+
+    await logoutPage.logout();
+    // logout success (back to login page)
+    await expect(page).toHaveURL("/");
+  });
+
+  test("TS001_TC002 - Login and Logout problem user #2", async ({ page,loginPage, logoutPage, problemUser }) => {
+    // login
+    await loginPage.login(problemUser.username, problemUser.password);
 
     // login success
     await expect(page).toHaveURL(/inventory.html/);
 
     // Open menu and logout
-    await page.locator("#react-burger-menu-btn").click();
-    await page.locator('[data-test="logout-sidebar-link"]').click();
+    await logoutPage.logout();
 
     // logout success (back to login page)
     await expect(page).toHaveURL("/");
   });
 
-  test("Login and Logout problem user #2", async ({ page }) => {
+  test("TS001_TC003 - Login and Logout visual user #3", async ({ page,loginPage, logoutPage, visualUser }) => {
     // login
-    await loginPage.login("problem_user", "secret_sauce");
+    await loginPage.login(visualUser.username, visualUser.password);
 
     // login success
     await expect(page).toHaveURL(/inventory.html/);
 
     // Open menu and logout
-    await page.locator("#react-burger-menu-btn").click();
-    await page.locator('[data-test="logout-sidebar-link"]').click();
-
-    // logout success (back to login page)
-    await expect(page).toHaveURL("/");
-  });
-
-  test("Login and Logout visual user #3", async ({ page }) => {
-    // login
-    await loginPage.login("visual_user", "secret_sauce");
-
-    // login success
-    await expect(page).toHaveURL(/inventory.html/);
-
-    // Open menu and logout
-    await page.locator("#react-burger-menu-btn").click();
-    await page.locator('[data-test="logout-sidebar-link"]').click();
+    await logoutPage.logout();
 
     // logout success (back to login page)
     await expect(page).toHaveURL("/");

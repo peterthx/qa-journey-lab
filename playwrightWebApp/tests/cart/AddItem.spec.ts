@@ -1,34 +1,21 @@
-import { test, expect } from "@playwright/test";
-import { LoginPage } from "../../pages/auth/LoginPage";
-import { InventoryPage } from "../../pages/inventory/InventoryPage";
-import { CartPage } from "../../pages/cart/CartPage";
-import { CheckoutPage } from "../../pages/cart/CheckoutPage";
+import { test, expect } from "../../fixtures/BasePages";
 
-test.describe("Shopping Cart – Add Item Tests", () => {
-  let loginPage: LoginPage;
-  let inventoryPage: InventoryPage;
-  let cartPage: CartPage;
-  let checkoutPage: CheckoutPage;
 
-  test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
-    inventoryPage = new InventoryPage(page);
+test.describe("TS002 - Shopping Cart – Add Item Tests", () => {
+
+  test.beforeEach(async ({ loginPage, standardUser }) => {
     await loginPage.navigate();
-    await loginPage.login("standard_user", "secret_sauce");
+    await loginPage.login(standardUser.username, standardUser.password);
   });
 
-  test.afterEach(async ({ page }) => {
-    await page.getByRole("button", { name: "Open Menu" }).click();
-    const logout = page.locator('[data-test="logout-sidebar-link"]');
-    await expect(logout).toBeVisible();
-    await logout.click();
+  test.afterEach(async ({ logoutPage, page }) => {
+    await logoutPage.logout();
+    expect(page).toHaveURL("/");
   });
 
-  test("User can add 1 item to the cart", async ({ page }) => {
-    cartPage = new CartPage(page);
-    checkoutPage = new CheckoutPage(page);
+  test("TS002_TC001 - User can add 1 item to the cart", async ({ cartPage, checkoutPage, inventoryPage }) => {
 
-    await inventoryPage.addToCartSauceBackpackButton.click();
+    await inventoryPage.btnAddBackpack.click();
     await expect(inventoryPage.cartLink).toContainText("1");
     await inventoryPage.cartLink.click();
     await cartPage.goToCheckout();
@@ -43,13 +30,10 @@ test.describe("Shopping Cart – Add Item Tests", () => {
     await checkoutPage.backToProducts();
   });
 
-  test("User can add multiple items to the cart", async ({ page }) => {
-    cartPage = new CartPage(page);
-    checkoutPage = new CheckoutPage(page);
-
-    await inventoryPage.addToCartSauceBackpackButton.click();
-    await inventoryPage.addToCartSaucelabsBoltTshirtButton.click();
-    await inventoryPage.addToCartSauceLabsBikeLightButton.click();
+  test("TS002_TC002 - User can add multiple items to the cart", async ({ cartPage, inventoryPage, checkoutPage }) => {
+    await inventoryPage.btnAddBackpack.click();
+    await inventoryPage.btnAddBoltTShirt.click();
+    await inventoryPage.btnAddBikeLight.click();
     await expect(inventoryPage.cartLink).toContainText("3");
     await inventoryPage.cartLink.click();
     await cartPage.goToCheckout();
@@ -68,10 +52,7 @@ test.describe("Shopping Cart – Add Item Tests", () => {
     await checkoutPage.backToProducts();
   });
 
-  test("User can add all items to the cart", async ({ page }) => {
-    cartPage = new CartPage(page);
-    checkoutPage = new CheckoutPage(page);
-
+  test("TS002_TC003 - User can add all items to the cart", async ({ cartPage, checkoutPage, inventoryPage }) => {
     await inventoryPage.addAllItemsToCart();
 
     await expect(inventoryPage.cartLink).toContainText("6");

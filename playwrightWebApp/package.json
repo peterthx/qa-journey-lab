@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "scripts": {
     "test": "playwright test",
-    "test:headed":"npx playwright test --headed"
+    "test:headed": "npx playwright test --headed"
   },
   "devDependencies": {
-    "@playwright/test": "1.57.0"
+    "@playwright/test": "1.57.0",
+    "@types/node": "^24.10.1"
   }
 }

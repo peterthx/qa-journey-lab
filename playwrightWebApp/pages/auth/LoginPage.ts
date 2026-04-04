@@ -1,31 +1,32 @@
-import { expect, type Locator, type Page } from '@playwright/test';
+import { expect, Page } from "@playwright/test";
 
 export class LoginPage {
-  readonly page: Page;
-  readonly usernameInput: Locator;
-  readonly passwordInput: Locator;
-  readonly loginButton: Locator;
-  readonly errorMessage: Locator;
+  constructor(private page: Page) {}
 
-  constructor(page: Page) {
-    this.page = page;
-    this.usernameInput = page.locator('#user-name');
-    this.passwordInput = page.locator('#password');
-    this.loginButton = page.locator('#login-button');
-    this.errorMessage = page.locator('[data-test="error"]');
+  get txtUsername() {
+    return this.page.locator("#user-name");
+  }
+  get txtPassword() {
+    return this.page.locator("#password");
+  }
+  get btnLogin() {
+    return this.page.locator("#login-button");
+  }
+  get txtErrMessage() {
+    return this.page.locator('[data-test="error"]');
   }
 
   async navigate() {
-    await this.page.goto('/');
+    await this.page.goto("/");
   }
 
   async login(username: string, password: string) {
-    await this.usernameInput.fill(username);
-    await this.passwordInput.fill(password);
-    await this.loginButton.click();
+    await this.txtUsername.fill(username);
+    await this.txtPassword.fill(password);
+    await this.btnLogin.click();
   }
 
   async assertErrorMessage(message: string) {
-    await expect(this.errorMessage).toHaveText(message);
+    await expect(this.txtErrMessage).toHaveText(message);
   }
 }

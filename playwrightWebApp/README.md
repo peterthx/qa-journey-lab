@@ -1,76 +1,56 @@
-# Playwright (Browser E2E) Tests
+# Playwright Web App E2E Tests
 
-This project contains browser end-to-end tests using Playwright for a sample web application.
+A comprehensive end-to-end testing suite for web applications using Playwright and the Page Object Model (POM) pattern.
 
 ## 🚀 Quick Start
 
-1.  **Navigate to the directory:**
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-    ```bash
-    cd playwright-web
-    ```
+2. **Install Playwright browsers:**
+   ```bash
+   npx playwright install
+   ```
 
-2.  **Install dependencies:**
-
-    ```bash
-    npm install
-    ```
-
-3.  **Install Playwright browsers:**
-
-    ```bash
-    npx playwright install
-    ```
-
-4.  **Run tests:**
-
-    ```bash
-    npx playwright test
-    ```
+3. **Run tests:**
+   ```bash
+   npm test
+   ```
 
 ## 📂 Project Structure
 
--   `playwright.config.ts` — Playwright configuration file.
--   `tests/` — Contains all the test files.
-    -   `auth/` — Tests for authentication-related features.
-    -   `cart/` — Tests for shopping cart functionality.
--   `playwright-report/` — Directory where Playwright HTML reports are generated.
--   `test-results/` — Directory where test artifacts like screenshots and traces are stored.
+- `pages/` — Page Object Models for different application modules.
+  - `auth/` — Login and Logout pages.
+  - `cart/` — Cart and Checkout pages.
+  - `inventory/` — Inventory and Product pages.
+- `tests/` — Playwright test specifications.
+  - `auth/` — Authentication-related tests.
+  - `cart/` — Shopping cart and checkout tests.
+- `fixtures/` — Custom Playwright fixtures for page initialization.
+- `datatest/` — Test data and constants.
+- `playwright.config.ts` — Playwright configuration.
 
-## Running Tests
+## 🛠️ Commands
 
-To run all tests:
+| Command | Description |
+|---------|-------------|
+| `npm test` | Run all tests in headless mode |
+| `npm run test:headed` | Run all tests in headed mode |
+| `npx playwright test <path>` | Run a specific test or directory |
+| `npx playwright show-report` | View the last test report |
 
-```bash
-npx playwright test
-```
+## 📊 Reporting
 
-To run a specific test file:
-
-```bash
-npx playwright test tests/auth/login-success.spec.ts
-```
-
-To run tests in a specific folder:
-
-```bash
-npx playwright test tests/cart/
-```
-
-## Reporting
-
-After the tests have run, an HTML report is generated in the `playwright-report` directory. You can view it with this command:
-
+Test reports are generated in the `playwright-report/` directory. You can view the HTML report using:
 ```bash
 npx playwright show-report
 ```
 
-## Recommended next steps
+## 💡 Best Practices
 
--   Remove any `test.only` lines in Playwright tests before CI runs.
--   Move credentials and endpoints to environment variables or CI secrets.
--   Add `npm` scripts to `package.json` to simplify common commands.
-
----
-
-**Last Updated:** December 5, 2025
+- **Page Object Model:** Always encapsulate page logic in the `pages/` directory.
+- **Fixtures:** Use `fixtures/BasePages.ts` to manage page instances and simplify test setup.
+- **Test Data:** Keep test data separate in the `datatest/` directory.
+- **Reports:** Review trace files in `test-results/` for debugging failed tests.
