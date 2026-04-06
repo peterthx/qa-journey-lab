@@ -4,11 +4,11 @@ export class InventoryPage {
   constructor(private page: Page) {}
 
   // get cart link and cart shop link
-  get cartLink() {
+  get lnkCart() {
     return this.page.locator(".shopping_cart_link");
   }
 
-  get cartShopLink() {
+  get lnkCartShop() {
     return this.page.locator('[data-test="shopping-cart-link"]');
   }
 

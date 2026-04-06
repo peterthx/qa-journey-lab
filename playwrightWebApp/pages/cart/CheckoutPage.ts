@@ -6,65 +6,65 @@ export class CheckoutPage {
     this.page = page;
   }
 
-  get firstNameInput() {
+  get txtFirstname() {
     return this.page.locator('[data-test="firstName"]');
   }
 
-  get lastNameInput() {
+  get txtLastname() {
     return this.page.locator('[data-test="lastName"]');
   }
 
-  get postalCodeInput() {
+  get txtPostalcode() {
     return this.page.locator('[data-test="postalCode"]');
   }
 
-  get continueButton() {
+  get btnContinue() {
     return this.page.locator('[data-test="continue"]');
   }
 
-  get finishButton() {
+  get btnFinish() {
     return this.page.locator('[data-test="finish"]');
   }
 
-  get backToProductsButton() {
+  get btnBackToProducts() {
     return this.page.locator('[data-test="back-to-products"]');
   }
-  get subtotalLabel() {
+  get lblSubtotal() {
     return this.page.locator('[data-test="subtotal-label"]');
   }
-  get taxLabel() {
+  get lblTax() {
     return this.page.locator('[data-test="tax-label"]');
   }
-  get totalLabel() {
+  get lblTotal() {
     return this.page.locator('[data-test="total-label"]');
   }
-  get logoutButton() {
+  get btnLogout() {
     return this.page.locator('[data-test="logout-sidebar-link"]');
   }
-  get openMenuButton() {
+  get btnOpenMenu() {
     return this.page.getByRole("button", { name: "Open Menu" });
   }
 
   async inputAddress(firstName: string, lastName: string, postalCode: string) {
-    await this.firstNameInput.fill(firstName);
-    await this.lastNameInput.fill(lastName);
-    await this.postalCodeInput.fill(postalCode);
-    await this.continueButton.click();
+    await this.txtFirstname.fill(firstName);
+    await this.txtLastname.fill(lastName);
+    await this.txtPostalcode.fill(postalCode);
+    await this.btnContinue.click();
   }
 
   async finishCheckout() {
-    await this.finishButton.click();
+    await this.btnFinish.click();
   }
 
   async backToProducts() {
-      await this.backToProductsButton.click();
+      await this.btnBackToProducts.click();
   }
 
   async openMenu() {
-    await this.openMenuButton.click();
+    await this.btnOpenMenu.click();
   }
 
   async logout() {
-    await this.logoutButton.click();
+    await this.btnLogout.click();
   }
 }
