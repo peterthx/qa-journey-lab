@@ -1,9 +1,10 @@
 import { Page } from "@playwright/test";
+import { BasePage } from "../../fixtures/BasePage";
 
-export class CheckoutPage {
+export class CheckoutPage extends BasePage{
 
-  constructor(private page: Page) {
-    this.page = page;
+  constructor(protected page: Page) {
+    super(page);
   }
 
   get txtFirstname() {
@@ -29,42 +30,47 @@ export class CheckoutPage {
   get btnBackToProducts() {
     return this.page.locator('[data-test="back-to-products"]');
   }
+
   get lblSubtotal() {
     return this.page.locator('[data-test="subtotal-label"]');
   }
+
   get lblTax() {
     return this.page.locator('[data-test="tax-label"]');
   }
+
   get lblTotal() {
     return this.page.locator('[data-test="total-label"]');
   }
+
   get btnLogout() {
     return this.page.locator('[data-test="logout-sidebar-link"]');
   }
+  
   get btnOpenMenu() {
     return this.page.getByRole("button", { name: "Open Menu" });
   }
 
-  async inputAddress(firstName: string, lastName: string, postalCode: string) {
+  public async inputAddress(firstName: string, lastName: string, postalCode: string) {
     await this.txtFirstname.fill(firstName);
     await this.txtLastname.fill(lastName);
     await this.txtPostalcode.fill(postalCode);
     await this.btnContinue.click();
   }
 
-  async finishCheckout() {
+  public async finishCheckout() {
     await this.btnFinish.click();
   }
 
-  async backToProducts() {
+  public async backToProducts() {
       await this.btnBackToProducts.click();
   }
 
-  async openMenu() {
+  public async openMenu() {
     await this.btnOpenMenu.click();
   }
 
-  async logout() {
+  public async logout() {
     await this.btnLogout.click();
   }
 }

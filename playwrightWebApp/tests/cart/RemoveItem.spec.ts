@@ -1,4 +1,4 @@
-import { test, expect } from "../../fixtures/BasePages";
+import { test, expect } from "../../fixtures/page.fixture";
 
 test.describe("TS003 - Remove Item from Cart Tests", () => {
   test.beforeEach(async ({ loginPage, standardUser }) => {

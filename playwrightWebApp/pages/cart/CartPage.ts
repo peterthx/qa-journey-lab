@@ -1,18 +1,20 @@
 import { Page } from "@playwright/test";
+import { BasePage } from "../../fixtures/BasePage";
 
-export class CartPage {
-  constructor(private page: Page) {
-    this.page = page;
+export class CartPage extends BasePage {
+  constructor(protected page: Page) {
+    super(page);
   }
 
   get btnCheckout() {
     return this.page.locator('[data-test="checkout"]');
   }
+
   get btnContinueShopping() {
     return this.page.locator('[data-test="continue-shopping"]');
   }
 
-  async goToCheckout() {
+  public async goToCheckout() {
     await this.btnCheckout.click();
   }
 }

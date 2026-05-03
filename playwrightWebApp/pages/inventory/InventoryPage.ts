@@ -1,7 +1,10 @@
 import { Page } from "@playwright/test";
+import { BasePage } from "../../fixtures/BasePage";
 
-export class InventoryPage {
-  constructor(private page: Page) {}
+export class InventoryPage extends BasePage {
+  constructor(protected page: Page) {
+    super(page);
+  }
 
   // get cart link and cart shop link
   get lnkCart() {
@@ -70,7 +73,7 @@ export class InventoryPage {
     );
   }
 
-  async addAllItemsToCart() {
+  public async addAllItemsToCart() {
     while (
       (await this.page.locator('[data-test^="add-to-cart-"]').count()) > 0
     ) {

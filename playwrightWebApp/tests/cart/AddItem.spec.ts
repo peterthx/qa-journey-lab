@@ -1,8 +1,7 @@
-import { test, expect } from "../../fixtures/BasePages";
-
+import { test, expect } from "../../fixtures/page.fixture";
 
 test.describe("TS002 - Shopping Cart – Add Item Tests", () => {
-
+  
   test.beforeEach(async ({ loginPage, standardUser }) => {
     await loginPage.navigate();
     await loginPage.login(standardUser.username, standardUser.password);
@@ -13,8 +12,11 @@ test.describe("TS002 - Shopping Cart – Add Item Tests", () => {
     expect(page).toHaveURL("/");
   });
 
-  test("TS002_TC001 - User can add 1 item to the cart", async ({ cartPage, checkoutPage, inventoryPage }) => {
-
+  test("TS002_TC001 - User can add 1 item to the cart", async ({
+    cartPage,
+    checkoutPage,
+    inventoryPage,
+  }) => {
     await inventoryPage.btnAddBackpack.click();
     await expect(inventoryPage.lnkCart).toContainText("1");
     await inventoryPage.lnkCart.click();
@@ -30,7 +32,11 @@ test.describe("TS002 - Shopping Cart – Add Item Tests", () => {
     await checkoutPage.backToProducts();
   });
 
-  test("TS002_TC002 - User can add multiple items to the cart", async ({ cartPage, inventoryPage, checkoutPage }) => {
+  test("TS002_TC002 - User can add multiple items to the cart", async ({
+    cartPage,
+    inventoryPage,
+    checkoutPage,
+  }) => {
     await inventoryPage.btnAddBackpack.click();
     await inventoryPage.btnAddBoltTShirt.click();
     await inventoryPage.btnAddBikeLight.click();
@@ -41,7 +47,7 @@ test.describe("TS002 - Shopping Cart – Add Item Tests", () => {
     await checkoutPage.inputAddress(
       "Lily",
       "Park",
-      "77 Castro St, Mountain View, CA"
+      "77 Castro St, Mountain View, CA",
     );
 
     await expect(checkoutPage.lblSubtotal).toContainText("$55.97");
@@ -52,7 +58,11 @@ test.describe("TS002 - Shopping Cart – Add Item Tests", () => {
     await checkoutPage.backToProducts();
   });
 
-  test("TS002_TC003 - User can add all items to the cart", async ({ cartPage, checkoutPage, inventoryPage }) => {
+  test("TS002_TC003 - User can add all items to the cart", async ({
+    cartPage,
+    checkoutPage,
+    inventoryPage,
+  }) => {
     await inventoryPage.addAllItemsToCart();
 
     await expect(inventoryPage.lnkCart).toContainText("6");
@@ -62,7 +72,7 @@ test.describe("TS002 - Shopping Cart – Add Item Tests", () => {
     await checkoutPage.inputAddress(
       "Noah",
       "Foster",
-      "210 University Ave, Palo Alto, CA"
+      "210 University Ave, Palo Alto, CA",
     );
 
     await expect(checkoutPage.lblSubtotal).toContainText("$129.94");

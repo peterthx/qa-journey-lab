@@ -1,11 +1,16 @@
-import { test, expect } from "../../fixtures/BasePages";
+import { test, expect } from "../../fixtures/page.fixture";
 
 test.describe("TS001 - Login Form Tests", () => {
-
+  
   test.beforeEach(async ({ loginPage }) => {
     await loginPage.navigate();
   });
-  test("TS001_TC001 - Login and Logout normal user #1", async ({ page,loginPage, logoutPage, standardUser }) => {
+  test("TS001_TC001 - Login and Logout normal user #1", async ({
+    page,
+    loginPage,
+    logoutPage,
+    standardUser,
+  }) => {
     // login
     await loginPage.login(standardUser.username, standardUser.password);
 
@@ -17,7 +22,12 @@ test.describe("TS001 - Login Form Tests", () => {
     await expect(page).toHaveURL("/");
   });
 
-  test("TS001_TC002 - Login and Logout problem user #2", async ({ page,loginPage, logoutPage, problemUser }) => {
+  test("TS001_TC002 - Login and Logout problem user #2", async ({
+    page,
+    loginPage,
+    logoutPage,
+    problemUser,
+  }) => {
     // login
     await loginPage.login(problemUser.username, problemUser.password);
 
@@ -31,7 +41,12 @@ test.describe("TS001 - Login Form Tests", () => {
     await expect(page).toHaveURL("/");
   });
 
-  test("TS001_TC003 - Login and Logout visual user #3", async ({ page,loginPage, logoutPage, visualUser }) => {
+  test("TS001_TC003 - Login and Logout visual user #3", async ({
+    page,
+    loginPage,
+    logoutPage,
+    visualUser,
+  }) => {
     // login
     await loginPage.login(visualUser.username, visualUser.password);
 
