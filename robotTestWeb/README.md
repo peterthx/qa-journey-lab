@@ -1,23 +1,26 @@
 # Web Test Automation Project (Robot Framework)
 
-This project provides end-to-end web test automation using Robot Framework and SeleniumLibrary (or Browser Library, depending on the implementation). It follows the Page Object Model (POM) pattern for better maintainability.
-
-## Prerequisites
-
-Before you begin, ensure you have the following installed:
-- Python 3
-- pip (Python package installer)
-- Browser drivers (e.g., ChromeDriver, GeckoDriver) if using SeleniumLibrary
+This project provides end-to-end web test automation using Robot Framework and SeleniumLibrary. It follows the **Page Object Model (POM)** pattern to ensure high maintainability, reusability, and readability.
 
 ## Project Structure
 
-- `tests/`: Contains the Robot Framework test suites (`.robot` files).
-- `resources/`: Contains reusable keywords, page objects, and common resources.
-    - `po/`: Page Objects implementation.
-        - `pages/`: Individual page keywords and locators.
-        - `shared/`: Shared keywords across multiple pages.
-- `results/`: Contains the test execution results, logs, and reports. This directory is ignored by git.
-- `venv/`: Contains the Python virtual environment for this project. This directory is ignored by git.
+The project has been refactored for better organization and scalability:
+
+- **`src/`**: The core of the automation framework.
+    - **`App.robot`**: The main entry point for all resources. Tests should import this file to access all keywords.
+    - **`config.robot`**: Centralized configuration (URLs, Browsers, Timeouts, Global Credentials).
+    - **`pages/`**: Page Objects containing locators and page-specific keywords (e.g., `login_page.robot`).
+    - **`shared/`**: Common keywords for application lifecycle (e.g., `common_keywords.robot` for Open/Close Application).
+- **`tests/`**: Contains the Robot Framework test suites.
+    - **`acceptance/`**: Acceptance tests verifying core business workflows.
+- **`results/`**: Automatically generated test execution logs and reports.
+- **`requirements.txt`**: List of Python dependencies.
+
+## Prerequisites
+
+- **Python 3.9+**
+- **pip** (Python package installer)
+- **Firefox** (Default browser in config) and **GeckoDriver** (handled by `webdriver-manager`).
 
 ## Setup
 
@@ -29,28 +32,36 @@ Before you begin, ensure you have the following installed:
 2.  **Create and activate a virtual environment:**
     ```bash
     python3 -m venv venv
-    source venv/bin/activate
+    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
     ```
 
-3.  **Install the required dependencies:**
+3.  **Install dependencies:**
     ```bash
     pip install -r requirements.txt
     ```
 
-## Running the Tests
+## Running Tests
 
-With the virtual environment activated, run the tests using the following command:
-
+### Run All Tests
 ```bash
-robot -d results tests/acceptance
+robot -d results tests/
 ```
 
-## Viewing the Results
+### Run by Tag
+```bash
+robot -d results -i smoke tests/
+```
 
-After running the tests, you can find the following files in the `results` directory:
+### Run Specific Suite
+```bash
+robot -d results tests/acceptance/tc_login_web.robot
+```
 
-- `log.html`: A detailed log of the test execution.
-- `report.html`: A high-level report of the test results.
-- `output.xml`: The test results in XML format.
+## Viewing Results
 
-Open `report.html` in your web browser to view a summary of the test run.
+After execution, detailed reports are generated in the `results/` folder:
+- `report.html`: High-level summary.
+- `log.html`: Detailed execution steps and screenshots (if applicable).
+
+---
+*Note: This project targets [SauceDemo](https://www.saucedemo.com/) for demonstration purposes.*
