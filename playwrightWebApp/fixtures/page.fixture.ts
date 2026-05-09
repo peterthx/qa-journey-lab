@@ -15,7 +15,6 @@ type MyFixture = {
   standardUser: typeof users.standardUser;
   problemUser: typeof users.problemUser;
   visualUser: typeof users.visualUser;
-
 };
 
 export const test = base.extend<MyFixture>({

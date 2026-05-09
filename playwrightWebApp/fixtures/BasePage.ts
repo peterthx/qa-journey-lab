@@ -1,8 +1,12 @@
-import { Page } from '@playwright/test';
+import { Page } from "@playwright/test";
 
 export class BasePage {
-  constructor(protected page: Page) {}
+  protected page: Page;
 
+  constructor(page: Page) {
+    this.page = page;
+  }
+  
   async navigate(path: string) {
     await this.page.goto(path);
   }
@@ -16,6 +20,6 @@ export class BasePage {
   }
 
   async waitForPageLoad() {
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState("networkidle");
   }
 }
