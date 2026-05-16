@@ -1,5 +1,5 @@
 import { Page } from "@playwright/test";
-import { BasePage } from "../../fixtures/BasePage";
+import { BasePage } from "../BasePage";
 
 export class InventoryPage extends BasePage {
   constructor(protected page: Page) {
