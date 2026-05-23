@@ -1,7 +1,0 @@
-# Ignore test results
-results/
-
-# Ignore virtual environment
-venv/
-
-.DS_Store

@@ -1,16 +1,56 @@
-# Node
+# Node.js
 node_modules/
+dist/
+build/
+out/
+.npm
+.cache
+.parcel-cache
+.next
+.nuxt
+*.tsbuildinfo
+.pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+npm-debug.log*
+*.tgz
+*.zip
 
-# Playwright
+# Playwright / Testing
 test-results/
 playwright-report/
 blob-report/
 playwright/.cache/
 playwright/.auth/
+trace/
+coverage/
+.nyc_output/
+cypress/videos/
+cypress/screenshots/
+
+# Robot Framework
+results/
+report.html
+log.html
+output.xml
+xunit.xml
 
 # k6
-results/
 reports/
+# results/ (already covered)
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv*/
+ENV/
+env.bak/
+venv.bak/
 
 # Environment variables
 .env
@@ -19,15 +59,26 @@ reports/
 .env.development
 .env.test
 .env.production
+!.env.example
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+.gradle/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
 
 # Logs
 *.log
 logs/
-npm-debug.log*
-
-# OS and editor files
-.DS_Store
-.vscode/
-.idea/
-*.swp
-*.swo
