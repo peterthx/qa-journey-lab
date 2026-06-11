@@ -1,7 +1,7 @@
 import { test, expect } from "../../fixtures/page.fixture";
 
 test.describe("TS002 - Shopping Cart – Add Item Tests", () => {
-  
+
   test.beforeEach(async ({ loginPage, standardUser }) => {
     await loginPage.navigate();
     await loginPage.login(standardUser.username, standardUser.password);

@@ -1,7 +1,7 @@
 import { Page } from "@playwright/test";
 import { BasePage } from "../BasePage";
 
-export class CheckoutPage extends BasePage{
+export class CheckoutPage extends BasePage {
 
   constructor(protected page: Page) {
     super(page);
@@ -46,7 +46,7 @@ export class CheckoutPage extends BasePage{
   get btnLogout() {
     return this.page.locator('[data-test="logout-sidebar-link"]');
   }
-  
+
   get btnOpenMenu() {
     return this.page.getByRole("button", { name: "Open Menu" });
   }
@@ -63,7 +63,7 @@ export class CheckoutPage extends BasePage{
   }
 
   public async backToProducts() {
-      await this.btnBackToProducts.click();
+    await this.btnBackToProducts.click();
   }
 
   public async openMenu() {

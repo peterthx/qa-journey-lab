@@ -1,10 +1,10 @@
 import { expect, Page } from "@playwright/test";
 import { BasePage } from "../BasePage";
 
-export class LogoutPage extends BasePage{
-  constructor(protected page: Page) { 
+export class LogoutPage extends BasePage {
+  constructor(protected page: Page) {
     super(page);
-   }
+  }
 
   get lnkBurgerMenu() {
     return this.page.locator("#react-burger-menu-btn")
