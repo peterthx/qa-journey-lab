@@ -61,6 +61,9 @@ venv.bak/
 .env.production
 !.env.example
 
+# GitHub customizations
+.github/
+
 # OS and editor files
 .DS_Store
 Thumbs.db
