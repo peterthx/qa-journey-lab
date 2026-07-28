@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test:api": "npm test --workspace=playwrightAPI",
-    "test:webapp": "npm test --workspace=playwrightWebApp"
+    "test:webapp": "npm test --workspace=playwrightWebApp",
+    "test:headless": "npm test --workspace=playwrightWebApp -- --headed"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +16,7 @@
     "playwrightWebApp"
   ],
   "devDependencies": {
-    "@playwright/test": "^1.57.0",
+    "@playwright/test": "^1.62.0",
     "@types/node": "^24.10.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
