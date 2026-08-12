@@ -1,11 +1,7 @@
-import { Page } from "@playwright/test";
+import { Locator } from "@playwright/test";
 import { BasePage } from "../BasePage";
 
 export class CartPage extends BasePage {
-  constructor(protected page: Page) {
-    super(page);
-  }
-
   get btnCheckout() {
     return this.page.locator('[data-test="checkout"]');
   }
@@ -14,7 +10,23 @@ export class CartPage extends BasePage {
     return this.page.locator('[data-test="continue-shopping"]');
   }
 
-  public async goToCheckout() {
+  get cartBadge() {
+    return this.page.locator('[data-test="shopping-cart-badge"]');
+  }
+
+  removeButton(productId: string): Locator {
+    return this.page.locator(`[data-test="remove-${productId}"]`);
+  }
+
+  async goToCheckout(): Promise<void> {
     await this.btnCheckout.click();
+  }
+
+  async continueShopping(): Promise<void> {
+    await this.btnContinueShopping.click();
+  }
+
+  async removeProduct(productId: string): Promise<void> {
+    await this.removeButton(productId).click();
   }
 }

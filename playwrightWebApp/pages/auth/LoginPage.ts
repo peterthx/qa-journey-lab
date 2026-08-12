@@ -1,11 +1,7 @@
-import { expect, Page } from "@playwright/test";
+import { expect } from "@playwright/test";
 import { BasePage } from "../BasePage";
 
 export class LoginPage extends BasePage {
-  constructor(protected page: Page) {
-    super(page);
-  }
-
   get txtUsername() {
     return this.page.locator("#user-name");
   }
@@ -22,17 +18,17 @@ export class LoginPage extends BasePage {
     return this.page.locator('[data-test="error"]');
   }
 
-  public async navigate() {
+  async navigate(): Promise<void> {
     await super.navigate("/");
   }
 
-  public async login(username: string, password: string) {
+  async login(username: string, password: string): Promise<void> {
     await this.txtUsername.fill(username);
     await this.txtPassword.fill(password);
     await this.btnLogin.click();
   }
 
-  public async assertErrorMessage(message: string) {
+  async assertErrorMessage(message: string): Promise<void> {
     await expect(this.txtErrMessage).toHaveText(message);
   }
 }

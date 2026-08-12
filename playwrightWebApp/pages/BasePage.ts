@@ -1,23 +1,21 @@
 import { Page } from "@playwright/test";
 
 export class BasePage {
-  constructor(protected page: Page) {
-    this.page = page;
-  }
+  constructor(protected readonly page: Page) {}
 
-  async navigate(path: string) {
+  async navigate(path: string): Promise<void> {
     await this.page.goto(path);
   }
 
-  async getTitle() {
-    return await this.page.title();
+  async getTitle(): Promise<string> {
+    return this.page.title();
   }
 
-  async getUrl() {
+  getUrl(): string {
     return this.page.url();
   }
 
-  async waitForPageLoad() {
+  async waitForPageLoad(): Promise<void> {
     await this.page.waitForLoadState("networkidle");
   }
 }

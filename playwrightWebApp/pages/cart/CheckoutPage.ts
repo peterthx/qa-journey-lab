@@ -1,12 +1,12 @@
-import { Page } from "@playwright/test";
 import { BasePage } from "../BasePage";
 
+export type CheckoutAddress = {
+  firstName: string;
+  lastName: string;
+  postalCode: string;
+};
+
 export class CheckoutPage extends BasePage {
-
-  constructor(protected page: Page) {
-    super(page);
-  }
-
   get txtFirstname() {
     return this.page.locator('[data-test="firstName"]');
   }
@@ -43,34 +43,18 @@ export class CheckoutPage extends BasePage {
     return this.page.locator('[data-test="total-label"]');
   }
 
-  get btnLogout() {
-    return this.page.locator('[data-test="logout-sidebar-link"]');
-  }
-
-  get btnOpenMenu() {
-    return this.page.getByRole("button", { name: "Open Menu" });
-  }
-
-  public async inputAddress(firstName: string, lastName: string, postalCode: string) {
+  async inputAddress({ firstName, lastName, postalCode }: CheckoutAddress): Promise<void> {
     await this.txtFirstname.fill(firstName);
     await this.txtLastname.fill(lastName);
     await this.txtPostalcode.fill(postalCode);
     await this.btnContinue.click();
   }
 
-  public async finishCheckout() {
+  async finishCheckout(): Promise<void> {
     await this.btnFinish.click();
   }
 
-  public async backToProducts() {
+  async backToProducts(): Promise<void> {
     await this.btnBackToProducts.click();
-  }
-
-  public async openMenu() {
-    await this.btnOpenMenu.click();
-  }
-
-  public async logout() {
-    await this.btnLogout.click();
   }
 }

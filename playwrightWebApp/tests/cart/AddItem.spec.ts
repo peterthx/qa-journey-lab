@@ -1,4 +1,6 @@
 import { test, expect } from "../../fixtures/page.fixture";
+import { checkoutData } from "../../datatest/checkout";
+import { products } from "../../datatest/products";
 
 test.describe("TS002 - Shopping Cart – Add Item Tests", () => {
 
@@ -9,7 +11,7 @@ test.describe("TS002 - Shopping Cart – Add Item Tests", () => {
 
   test.afterEach(async ({ logoutPage, page }) => {
     await logoutPage.logout();
-    expect(page).toHaveURL("/");
+    await expect(page).toHaveURL("/");
   });
 
   test("TS002_TC001 - User can add 1 item to the cart", async ({
@@ -17,16 +19,17 @@ test.describe("TS002 - Shopping Cart – Add Item Tests", () => {
     checkoutPage,
     inventoryPage,
   }) => {
-    await inventoryPage.btnAddBackpack.click();
-    await expect(inventoryPage.lnkCart).toContainText("1");
-    await inventoryPage.lnkCart.click();
+    await inventoryPage.addProduct(products.backpack);
+    await expect(inventoryPage.cartBadge).toHaveText("1");
+    await inventoryPage.openCart();
     await cartPage.goToCheckout();
 
-    await checkoutPage.inputAddress("John", "Smith", "1989 San Francisco US");
+    const { address, totals } = checkoutData.singleItem;
+    await checkoutPage.inputAddress(address);
 
-    await expect(checkoutPage.lblSubtotal).toContainText("$29.99");
-    await expect(checkoutPage.lblTax).toContainText("$2.40");
-    await expect(checkoutPage.lblTotal).toContainText("$32.39");
+    await expect(checkoutPage.lblSubtotal).toContainText(totals.subtotal);
+    await expect(checkoutPage.lblTax).toContainText(totals.tax);
+    await expect(checkoutPage.lblTotal).toContainText(totals.total);
 
     await checkoutPage.finishCheckout();
     await checkoutPage.backToProducts();
@@ -37,22 +40,17 @@ test.describe("TS002 - Shopping Cart – Add Item Tests", () => {
     inventoryPage,
     checkoutPage,
   }) => {
-    await inventoryPage.btnAddBackpack.click();
-    await inventoryPage.btnAddBoltTShirt.click();
-    await inventoryPage.btnAddBikeLight.click();
-    await expect(inventoryPage.lnkCart).toContainText("3");
-    await inventoryPage.lnkCart.click();
+    await inventoryPage.addProducts([products.backpack, products.boltTShirt, products.bikeLight]);
+    await expect(inventoryPage.cartBadge).toHaveText("3");
+    await inventoryPage.openCart();
     await cartPage.goToCheckout();
 
-    await checkoutPage.inputAddress(
-      "Lily",
-      "Park",
-      "77 Castro St, Mountain View, CA",
-    );
+    const { address, totals } = checkoutData.multipleItems;
+    await checkoutPage.inputAddress(address);
 
-    await expect(checkoutPage.lblSubtotal).toContainText("$55.97");
-    await expect(checkoutPage.lblTax).toContainText("$4.48");
-    await expect(checkoutPage.lblTotal).toContainText("$60.45");
+    await expect(checkoutPage.lblSubtotal).toContainText(totals.subtotal);
+    await expect(checkoutPage.lblTax).toContainText(totals.tax);
+    await expect(checkoutPage.lblTotal).toContainText(totals.total);
 
     await checkoutPage.finishCheckout();
     await checkoutPage.backToProducts();
@@ -65,19 +63,16 @@ test.describe("TS002 - Shopping Cart – Add Item Tests", () => {
   }) => {
     await inventoryPage.addAllItemsToCart();
 
-    await expect(inventoryPage.lnkCart).toContainText("6");
-    await inventoryPage.lnkCart.click();
+    await expect(inventoryPage.cartBadge).toHaveText("6");
+    await inventoryPage.openCart();
     await cartPage.goToCheckout();
 
-    await checkoutPage.inputAddress(
-      "Noah",
-      "Foster",
-      "210 University Ave, Palo Alto, CA",
-    );
+    const { address, totals } = checkoutData.allItems;
+    await checkoutPage.inputAddress(address);
 
-    await expect(checkoutPage.lblSubtotal).toContainText("$129.94");
-    await expect(checkoutPage.lblTax).toContainText("$10.40");
-    await expect(checkoutPage.lblTotal).toContainText("$140.34");
+    await expect(checkoutPage.lblSubtotal).toContainText(totals.subtotal);
+    await expect(checkoutPage.lblTax).toContainText(totals.tax);
+    await expect(checkoutPage.lblTotal).toContainText(totals.total);
 
     await checkoutPage.finishCheckout();
     await checkoutPage.backToProducts();

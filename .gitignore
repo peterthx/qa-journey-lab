@@ -64,6 +64,11 @@ venv.bak/
 # GitHub customizations
 .github/
 
+# Codex project guidance and skills
+/AGENTS.md
+/skills/qa-journey-lab/SKILL.md
+/skills/qa-journey-lab/agents/openai.yaml
+
 # OS and editor files
 .DS_Store
 Thumbs.db

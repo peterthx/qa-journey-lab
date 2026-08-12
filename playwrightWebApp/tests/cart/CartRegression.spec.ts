@@ -1,4 +1,6 @@
 import { test, expect } from "../../fixtures/page.fixture";
+import { checkoutData } from "../../datatest/checkout";
+import { products } from "../../datatest/products";
 
 test.describe("TS004 - Cart regression tests", () => {
   test.beforeEach(async ({ loginPage, standardUser }) => {
@@ -16,25 +18,25 @@ test.describe("TS004 - Cart regression tests", () => {
     cartPage,
     checkoutPage,
   }) => {
-    await inventoryPage.btnAddBackpack.click();
-    await inventoryPage.btnAddBikeLight.click();
-    await expect(inventoryPage.lnkCart).toContainText("2");
+    await inventoryPage.addProducts([products.backpack, products.bikeLight]);
+    await expect(inventoryPage.cartBadge).toHaveText("2");
 
-    await inventoryPage.lnkCartShop.click();
+    await inventoryPage.openCart();
     await expect(cartPage.btnCheckout).toBeVisible();
-    await cartPage.btnContinueShopping.click();
+    await cartPage.continueShopping();
 
-    await inventoryPage.btnAddBoltTShirt.click();
-    await expect(inventoryPage.lnkCart).toContainText("3");
+    await inventoryPage.addProduct(products.boltTShirt);
+    await expect(inventoryPage.cartBadge).toHaveText("3");
 
-    await inventoryPage.lnkCartShop.click();
+    await inventoryPage.openCart();
     await cartPage.goToCheckout();
 
-    await checkoutPage.inputAddress("Regression", "Test", "1234 Test Road");
+    const { address, totals } = checkoutData.regression;
+    await checkoutPage.inputAddress(address);
 
-    await expect(checkoutPage.lblSubtotal).toContainText("$55.97");
-    await expect(checkoutPage.lblTax).toContainText("$4.48");
-    await expect(checkoutPage.lblTotal).toContainText("$60.45");
+    await expect(checkoutPage.lblSubtotal).toContainText(totals.subtotal);
+    await expect(checkoutPage.lblTax).toContainText(totals.tax);
+    await expect(checkoutPage.lblTotal).toContainText(totals.total);
 
     await checkoutPage.finishCheckout();
     await expect(checkoutPage.btnBackToProducts).toBeVisible();
