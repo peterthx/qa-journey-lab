@@ -1,124 +1,97 @@
 # QA Journey Lab
 
-A comprehensive collection of automated test examples and supporting utilities used in the **QA Journey Lab**. This repository demonstrates various automation tools and frameworks for modern QA workflows, including Web E2E, API, and Performance testing.
+This project is a place to learn and try different types of software testing. It includes tests for websites, APIs, and server performance.
 
-## 🚀 Projects Overview
+## Choose a project
 
-This repository is structured as a monorepo with focused projects for different automation needs:
+| Folder | What you can test | Tool |
+| --- | --- | --- |
+| [`playwrightWebApp/`](./playwrightWebApp/) | A website: login, shopping cart, and checkout | Playwright with TypeScript |
+| [`playwrightAPI/`](./playwrightAPI/) | An API: customers and orders | Playwright with TypeScript |
+| [`robotTestWeb/`](./robotTestWeb/) | A website: login and other browser actions | Robot Framework |
+| [`robotTestsAPIs/`](./robotTestsAPIs/) | An API: order requests | Robot Framework |
+| [`k6LoadTest/`](./k6LoadTest/) | API speed and load | k6 |
 
-| Project | Tool / Framework | Description |
-| :--- | :--- | :--- |
-| [**`playwrightWebApp/`**](./playwrightWebApp) | Playwright (TS) | End-to-end (E2E) web tests using Page Object Model. |
-| [**`playwrightAPI/`**](./playwrightAPI) | Playwright (TS) | Automated API testing with validation and data-driven approach. |
-| [**`robotTestWeb/`**](./robotTestWeb) | Robot Framework | Web E2E tests using Robot Framework and Page Object Model. |
-| [**`robotTestsAPIs/`**](./robotTestsAPIs) | Robot Framework | API testing using Robot Framework's RequestsLibrary. |
-| [**`k6LoadTest/`**](./k6LoadTest) | k6 | API performance, smoke, and load testing scenarios. |
+The browser tests use [SauceDemo](https://www.saucedemo.com/). The API tests use the server address set in each project's configuration.
 
----
+## What you need
 
-## 🛠️ Getting Started
+- **Playwright projects:** Node.js 26 and npm 11. The exact supported versions are listed in the root `package.json`.
+- **Robot Framework projects:** Python 3 and pip.
+- **k6 tests:** k6. Follow the [k6 install guide](https://grafana.com/docs/k6/latest/set-up/install-k6/).
 
-### Prerequisites
+## Run Playwright tests
 
-Ensure you have the following installed on your system:
-- **Node.js** (v20+) - For Playwright and JS utilities.
-- **Python 3** - For Robot Framework projects.
-- **k6** - For performance testing. [Installation Guide](https://k6.io/docs/getting-started/installation/)
+Open a terminal in the main `qa-journey-lab/` folder and install the dependencies and browsers:
 
-### Installation & Setup
-
-#### 1. Playwright Projects (Web & API)
-These projects are managed using npm workspaces.
-```bash
-# Install dependencies for all Playwright workspaces
+```sh
 npm install
-
-# Install Playwright browsers
 npx playwright install
 ```
 
-#### 2. Robot Framework Projects
-Each Robot project uses its own virtual environment.
-```bash
-# Setup API tests
-cd robotTestsAPIs
-python3 -m venv venv
-source venv/bin/activate
+Run tests from that same folder:
+
+```sh
+npm run test:webapp   # website tests
+npm run test:api      # API tests
+```
+
+To run one website test:
+
+```sh
+npm run test --workspace=playwrightWebApp -- tests/auth/LoginSuccess.spec.ts
+```
+
+## Run Robot Framework tests
+
+First, open a terminal in the Robot project you want to use. Create a virtual environment and install that project's requirements.
+
+For API tests, run these commands from `robotTestsAPIs/`:
+
+```sh
+python -m venv .venv
+```
+
+Activate the environment, then install and run the tests:
+
+```sh
+# macOS or Linux
+source .venv/bin/activate
+
+# Windows PowerShell: use this instead
+# .venv\Scripts\Activate.ps1
+
 pip install -r requirements.txt
-deactivate
-cd ..
-
-# Setup Web tests
-cd robotTestWeb
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-deactivate
-cd ..
-```
-
-#### 3. k6 Performance Tests
-```bash
-cd k6LoadTest
-# Create your settings file from the example
-cp .env/settings.js.example .env/settings.js
-cd ..
-```
-
----
-
-## 🧪 Running Tests
-
-### Playwright (Browser & API)
-Run tests from the root using npm workspaces:
-```bash
-# Run Web E2E tests
-npm run test:webapp
-
-# Run API tests
-npm run test:api
-```
-
-### Robot Framework
-Navigate to the specific project directory and activate the virtual environment:
-```bash
-# Run API tests
-cd robotTestsAPIs
-source venv/bin/activate
 robot -d results tests/
-deactivate
-
-# Run Web tests
-cd robotTestWeb
-source venv/bin/activate
-robot -d results tests/acceptance
-deactivate
 ```
 
-### k6 Performance Tests
-Run k6 commands from the `k6LoadTest` directory:
-```bash
-cd k6LoadTest
+For website tests, repeat the setup from `robotTestWeb/`. Run the tests with:
 
-# Smoke Test
+```sh
+robot -d results tests/acceptance/
+```
+
+Robot Framework saves the test report and log in the `results/` folder.
+
+## Run k6 tests
+
+Before running a k6 test, create `k6LoadTest/.env/settings.js`. The test scripts read the API address and endpoint paths from this file. It must export `BASE_URL.ENDPOINT` and these `SERVICE` paths: `GET_ALL_PRODUCTS`, `GET_ALL_ORDER_LIST`, `POST_NEW_ORDER`, `GET_ALL_SUPPLIERS`, `POST_NEW_SUPPLIER`, and `DEL_SUPPLIER`.
+
+Open a terminal in `k6LoadTest/`, then run a test:
+
+```sh
 k6 run tests/smoke/smoke-test.js
-
-# Load Test
-k6 run --vus 10 --duration 30s tests/load/wh-load-orders.js
+k6 run tests/load/wh-load-orders.js
+k6 run tests/load/wh-load-supliers.js
 ```
 
----
+The load tests add records to the API. Make sure the configured API is suitable for test data before running them.
 
-## 🏗️ Project Structure Guidelines
+## Test results
 
-- **Page Object Model (POM):** Both Playwright and Robot Framework web tests follow the POM pattern for better maintainability.
-- **Clean Code:** We prioritize readability, meaningful assertions, and reusable keywords/functions.
-- **Reporting:** Each tool provides its own reporting (Playwright HTML reporter, Robot Framework `report.html`, k6 summary).
+- **Playwright website tests:** create an HTML report. From `playwrightWebApp/`, run `npx playwright show-report` to view it.
+- **Playwright API tests:** show results in the terminal.
+- **Robot Framework:** saves `report.html` and `log.html` in `results/`.
+- **k6:** prints a summary in the terminal.
 
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
+For more details about one test project, see the README inside its folder.
