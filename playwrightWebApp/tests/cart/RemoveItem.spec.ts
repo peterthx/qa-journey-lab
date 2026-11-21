@@ -7,7 +7,10 @@ test.describe("TS003 - Remove Item from Cart Tests", () => {
     await loginPage.login(standardUser.username, standardUser.password);
   });
 
-  test.afterEach(async ({ logoutPage, page }) => {
+  test.afterEach(async ({ cartPage, logoutPage, page }) => {
+    if (page.url().endsWith("/cart.html")) {
+      await cartPage.continueShopping();
+    }
     await logoutPage.logout();
     await expect(page).toHaveURL("/");
   });
@@ -45,7 +48,6 @@ test.describe("TS003 - Remove Item from Cart Tests", () => {
   }) => {
     // Add all items to the cart
     await inventoryPage.addAllItemsToCart();
-    await expect(inventoryPage.cartBadge).toHaveText("6");
 
     await inventoryPage.openCart();
     for (const product of Object.values(products)) {

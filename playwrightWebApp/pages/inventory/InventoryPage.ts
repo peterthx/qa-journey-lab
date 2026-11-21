@@ -1,4 +1,4 @@
-import { Locator } from "@playwright/test";
+import { expect, Locator } from "@playwright/test";
 import { BasePage } from "../BasePage";
 
 export class InventoryPage extends BasePage {
@@ -26,8 +26,14 @@ export class InventoryPage extends BasePage {
 
   async addAllItemsToCart(): Promise<void> {
     const addButtons = this.page.locator('[data-test^="add-to-cart-"]');
-    while (await addButtons.count()) {
-      await addButtons.first().click();
+    const productIds = await addButtons.evaluateAll((buttons) =>
+      buttons.map((button) => button.getAttribute("data-test")!.replace("add-to-cart-", "")),
+    );
+
+    for (const [index, productId] of productIds.entries()) {
+      await this.addProduct(productId);
+      await expect(this.page.locator(`[data-test="remove-${productId}"]`)).toBeVisible();
+      await expect(this.cartBadge).toHaveText(String(index + 1));
     }
   }
 

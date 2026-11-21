@@ -1,6 +1,11 @@
 {
   "name": "qa-journey-lab",
   "version": "1.0.0",
+  "packageManager": "npm@11.20.0",
+  "engines": {
+    "node": ">=26.13.1 <27",
+    "npm": ">=11.20.0 <12"
+  },
   "description": "A monorepo for Playwright tests.",
   "main": "index.js",
   "scripts": {

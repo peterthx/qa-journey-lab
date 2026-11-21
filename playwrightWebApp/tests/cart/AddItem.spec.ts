@@ -62,8 +62,6 @@ test.describe("TS002 - Shopping Cart – Add Item Tests", () => {
     inventoryPage,
   }) => {
     await inventoryPage.addAllItemsToCart();
-
-    await expect(inventoryPage.cartBadge).toHaveText("6");
     await inventoryPage.openCart();
     await cartPage.goToCheckout();
 

@@ -1,6 +1,10 @@
 {
   "name": "playwright-web",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=26.13.1 <27",
+    "npm": ">=11.20.0 <12"
+  },
   "scripts": {
     "test": "playwright test",
     "test:headed": "npx playwright test --headed"

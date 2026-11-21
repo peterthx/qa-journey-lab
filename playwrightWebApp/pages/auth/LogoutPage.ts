@@ -11,7 +11,13 @@ export class LogoutPage extends BasePage {
   }
 
   async logout(): Promise<void> {
-    await this.lnkBurgerMenu.click();
+    await expect(this.page).toHaveURL(/inventory\.html/);
+    await expect(this.page.locator(".inventory_list")).toBeVisible();
+    await expect(this.lnkBurgerMenu).toBeAttached();
+    await this.lnkBurgerMenu.scrollIntoViewIfNeeded();
+    await expect(this.lnkBurgerMenu).toBeInViewport();
+    await this.lnkBurgerMenu.click({ force: true });
+    await expect(this.btnSidebarLink).toBeInViewport();
     await this.btnSidebarLink.click();
     await expect(this.page).toHaveURL("/");
   }

@@ -8,6 +8,7 @@ out/
 .parcel-cache
 .next
 .nuxt
+.nvmrc
 *.tsbuildinfo
 .pnpm-debug.log*
 yarn-debug.log*

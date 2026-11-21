@@ -40,5 +40,6 @@ test.describe("TS004 - Cart regression tests", () => {
 
     await checkoutPage.finishCheckout();
     await expect(checkoutPage.btnBackToProducts).toBeVisible();
+    await checkoutPage.backToProducts();
   });
 });
